@@ -139,7 +139,7 @@
     <li><a href="#下载安装hugo">下载安装Hugo</a></li>
     <li><a href="#如何使用hugo">如何使用Hugo</a></li>
     <li><a href="#github-pages是什么">GitHub Pages是什么</a></li>
-    <li><a href="#部署github--pages">部署Github  Pages</a></li>
+    <li><a href="#部署github-pages">部署Github Pages</a></li>
     <li><a href="#总结">总结</a></li>
   </ul>
 </nav>
@@ -206,7 +206,7 @@
 <p>Hugo是一个静态站点生成工具。可以根据<code>Markdown</code>文件生成静态站点文件。
 同类型的产品还有<code>Hexo</code>、<code>JEKYLL</code>、<code>Next.js</code>等。</p>
 <h2 id="下载安装hugo">下载安装Hugo</h2>
-<p>Windows可根据官网教程，可以直接到<a href="https://github.com/spf13/hugo/releases" title="Hugo Release">Hugo release</a>中下载最新的可执行文件。
+<p>Windows可根据官网教程，到<a href="https://github.com/spf13/hugo/releases" title="Hugo Release">Hugo release</a>中下载最新的可执行文件。
 下载解压后，将解压路径添加进环境变量中，命令行中执行 <code>hugo version</code> 能够正常显示即可。</p>
 <h2 id="如何使用hugo">如何使用Hugo</h2>
 <p><strong>步骤一</strong>：创建一个博客站点的框架,并进入到站点根目录下</p>
@@ -218,23 +218,30 @@ cd /path/to/site #进入站点根目录
 cp themes/maupassant/exampleSite/config.toml config.toml 
 </code></pre><p><strong>步骤三</strong>：创建文章内容页面</p>
 <pre><code>hugo new /posts/my-first-post.md
-</code></pre><p><strong>步骤四</strong>：本地执行Hugo Server 查看文章样式</p>
+</code></pre><p>生成文件如下</p>
+<pre><code>---
+title: &quot;my-first-post&quot;
+date: 2020-02-28T08:41:53+08:00
+draft: true  # 是否为草稿，如果是草稿则不会打包成静态站点
+---
+</code></pre><p><strong>步骤四</strong>：本地执行Hugo Server 查看文章草稿样式</p>
 <pre><code>hugo server -D
 </code></pre><p><strong>步骤五</strong>： 打包，将Markdown文件转换成HTML文件</p>
+<p>首先需要<code>my-first-post.md</code>文章上面的<code>draft</code>参数改为false或者直接删除</p>
 <pre><code>hugo -t  maupassant
 </code></pre><p>至此Hugo相关的基础用法就介绍到这里。可以看出来Hugo实际上最主要的作用将Markdown文件转换成HTML文件的作用。
 同时，可以进行一些静态站点的配置，当然可以通过一些插件来丰富Hugo的功能。</p>
 <h2 id="github-pages是什么">GitHub Pages是什么</h2>
-<p><code>Github Pages</code>可以理解成为一个静态资源托管服务器。不过这个托管服务器是可以直接指向<code>Github</code>的。
-官网是这么介绍的</p>
+<p><code>Github Pages</code>可以理解成为一个静态资源托管服务器。不过这个托管服务器直接指向<code>Github Repository</code>。
+官网介绍。</p>
 <blockquote>
 <p>GitHub Pages is a static site hosting service that takes HTML, CSS,
 and JavaScript files straight from a repository on GitHub,
 optionally runs the files through a build process, and publishes a website.</p>
 </blockquote>
-<p>这样带来的好处就是，通过<code>GitHub pages</code>管理的站点，可以通过<code>Git</code>进行文件的传输和操作,同时只要<code>Github</code>上
-的内容出现更改，服务器可以同步进行更新。因此我们只要根据Github Pages，无需服务器就可以搭建出以静态页为主的个人博客。</p>
-<h2 id="部署github--pages">部署Github  Pages</h2>
+<p>这样带来的好处就是，通过<code>GitHub pages</code>管理的站点，可以通过<code>Git</code>进行文件的管理,同时只要<code>Github</code>上
+的内容出现更改，站点可以同步进行更新。因此我们只要依靠Github Pages，无需服务器就可以搭建出以静态页为主的个人博客。</p>
+<h2 id="部署github-pages">部署Github Pages</h2>
 <p>站点经过打包之后就是纯粹的HTML文件，将<code>public</code>文件下的代码提交到个人帐号命名的<code>xxx.github.io</code>Repository上。
 访问<code>https://xxx.github.io</code>就可以看到生成的静态网页内容了。</p>
 <p>最后，我们也可以按照<code>Hugo</code>官方推荐的脚本，设置一下自动化打包部署到Github Pages上去。</p>
