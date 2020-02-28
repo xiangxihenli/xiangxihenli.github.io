@@ -17,7 +17,7 @@
       <pubDate>Thu, 27 Feb 2020 23:51:05 +0800</pubDate>
       
       <guid>https://xiangxihenli.github.io/tutorial/how-to-create-you-own-blog/</guid>
-      <description>Hugo是什么 Hugo是一个静态站点生成工具。可以根据markdown文件生成静态站点。 同类型的产品还有Hexo、JEKYLL、Next.js 下载安装Hugo windows根据官网教程，可以直接到Hugo release中下载最新的可执行文件。 下载解压后，将路径添加进环境变量中，命</description>
+      <description>Hugo是什么 Hugo是一个静态站点生成工具。可以根据Markdown文件生成静态站点文件。 同类型的产品还有Hexo、JEKYLL、Next.js等。 下载安装Hugo Windows可根据官网教程，可以直接到Hugo release中下载最新的可执行文件。 下载解压后，将解压路径添加进</description>
     </item>
     
   </channel>
