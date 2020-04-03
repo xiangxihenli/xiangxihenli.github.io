@@ -6,20 +6,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>使用Hugo&#43;GitHub Pages 搭建个人博客 | 相惜恨离</title>
-    <meta property="og:title" content="使用Hugo&#43;GitHub Pages 搭建个人博客 - 相惜恨离">
+    <title>PHP基础知识学习(04)--Array | 相惜恨离</title>
+    <meta property="og:title" content="PHP基础知识学习(04)--Array - 相惜恨离">
     <meta property="og:type" content="article">
         
-    <meta property="article:published_time" content='2020-02-27T23:51:05&#43;08:00'>
+    <meta property="article:published_time" content='2020-04-02T16:07:19&#43;08:00'>
         
         
-    <meta property="article:modified_time" content='2020-02-27T23:51:05&#43;08:00'>
+    <meta property="article:modified_time" content='2020-04-02T16:07:19&#43;08:00'>
         
     <meta name="Keywords" content="php,laravel,golang,go语言,go语言笔记,java,博客,项目管理,python,软件架构,公众号,小程序">
-    <meta name="description" content="使用Hugo&#43;GitHub Pages 搭建个人博客">
+    <meta name="description" content="PHP基础知识学习(04)--Array">
         
     <meta name="author" content="相惜恨离">
-    <meta property="og:url" content="https://xiangxihenli.github.io/tutorial/how-to-create-you-own-blog/">
+    <meta property="og:url" content="https://xiangxihenli.github.io/post/php-basic04/">
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 
     <link rel="stylesheet" href='/css/normalize.css'>
@@ -50,7 +50,7 @@
             </div>
             <div>
                 <nav id="nav-menu" class="clearfix">
-                    <a class="" href="https://xiangxihenli.github.io">首页</a>
+                    <a class="current" href="https://xiangxihenli.github.io">首页</a>
                     
                     <a  href="https://xiangxihenli.github.io/tutorial" title="教程">教程</a>
                     
@@ -137,11 +137,8 @@
     <div class="post-toc-content">
         <nav id="TableOfContents">
   <ul>
-    <li><a href="#hugo是什么">Hugo是什么</a></li>
-    <li><a href="#下载安装hugo">下载安装Hugo</a></li>
-    <li><a href="#如何使用hugo">如何使用Hugo</a></li>
-    <li><a href="#github-pages是什么">GitHub Pages是什么</a></li>
-    <li><a href="#部署github-pages">部署Github Pages</a></li>
+    <li><a href="#数组">数组</a></li>
+    <li><a href="#数组结构">数组结构</a></li>
     <li><a href="#总结">总结</a></li>
   </ul>
 </nav>
@@ -177,16 +174,16 @@
 
     <article class="post">
         <header>
-            <h1 class="post-title">使用Hugo&#43;GitHub Pages 搭建个人博客</h1>
+            <h1 class="post-title">PHP基础知识学习(04)--Array</h1>
         </header>
         <date class="post-meta meta-date">
-            2020年2月27日
+            2020年4月2日
         </date>
         
         <div class="post-meta">
             <span>|</span>
             
-            <span class="meta-category"><a href='https://xiangxihenli.github.io/categories/%E6%95%99%E7%A8%8B'>教程</a></span>
+            <span class="meta-category"><a href='https://xiangxihenli.github.io/categories/PHP%E5%9F%BA%E7%A1%80'>PHP基础</a></span>
             
         </div>
         
@@ -197,59 +194,19 @@
         </div>
         
         
-        <div class="clear" style="display: none">
-            <div class="toc-article">
-                <div class="toc-title">文章目录</div>
-            </div>
-        </div>
-        
         <div class="post-content">
-            <h2 id="hugo是什么">Hugo是什么</h2>
-<p>Hugo是一个静态站点生成工具。可以根据<code>Markdown</code>文件生成静态站点文件。
-同类型的产品还有<code>Hexo</code>、<code>JEKYLL</code>、<code>Next.js</code>等。</p>
-<h2 id="下载安装hugo">下载安装Hugo</h2>
-<p>Windows可根据官网教程，到<a href="https://github.com/spf13/hugo/releases" title="Hugo Release">Hugo release</a>中下载最新的可执行文件。
-下载解压后，将解压路径添加进环境变量中，命令行中执行 <code>hugo version</code> 能够正常显示即可。</p>
-<h2 id="如何使用hugo">如何使用Hugo</h2>
-<p><strong>步骤一</strong>：创建一个博客站点的框架,并进入到站点根目录下</p>
-<pre><code>hugo new site /path/to/site #你的站点路径
-cd /path/to/site #进入站点根目录
-</code></pre><p><strong>步骤二</strong>：到官网提供的<a href="http://www.gohugo.org/theme/" title="主题列表">主题列表</a>中选择合适的主题安装。</p>
-<pre><code>git clone https://github.com/flysnow-org/maupassant-hugo themes/maupassant
-# 将示例中配置文件复制到站点根目录
-cp themes/maupassant/exampleSite/config.toml config.toml 
-</code></pre><p>PS. 我个人认为很好看的主题</p>
-<p><a href="https://themes.gohugo.io/theme/beautifulhugo/" title="Beautiful Hugo">Beautifulhugo</a> : 清爽好看</p>
-<p><a href="https://blog.dgraph.io/" title="DGraph">DGraph</a>：搭配简单</p>
-<p><strong>步骤三</strong>：创建文章内容页面</p>
-<pre><code>hugo new /posts/my-first-post.md
-</code></pre><p>生成文件如下</p>
-<pre><code>---
-title: &quot;my-first-post&quot;
-date: 2020-02-28T08:41:53+08:00
-draft: true  # 是否为草稿，如果是草稿则不会打包成静态站点
----
-</code></pre><p><strong>步骤四</strong>：本地执行Hugo Server 查看文章草稿样式</p>
-<pre><code>hugo server -D
-</code></pre><p><strong>步骤五</strong>： 打包，将Markdown文件转换成HTML文件</p>
-<p>首先需要<code>my-first-post.md</code>文章上面的<code>draft</code>参数改为false或者直接删除</p>
-<pre><code>hugo -t  maupassant
-</code></pre><p>至此Hugo相关的基础用法就介绍到这里。可以看出来Hugo实际上最主要的作用将Markdown文件转换成HTML文件的作用。
-同时，可以进行一些静态站点的配置，当然可以通过一些插件来丰富Hugo的功能。</p>
-<h2 id="github-pages是什么">GitHub Pages是什么</h2>
-<p><code>Github Pages</code>可以理解成为一个静态资源托管服务器。不过这个托管服务器直接指向<code>Github Repository</code>。
-官网介绍。</p>
-<blockquote>
-<p>GitHub Pages is a static site hosting service that takes HTML, CSS,
-and JavaScript files straight from a repository on GitHub,
-optionally runs the files through a build process, and publishes a website.</p>
-</blockquote>
-<p>这样带来的好处就是，通过<code>GitHub pages</code>管理的站点，可以通过<code>Git</code>进行文件的管理,同时只要<code>Github</code>上
-的内容出现更改，站点可以同步进行更新。因此我们只要依靠Github Pages，无需服务器就可以搭建出以静态页为主的个人博客。</p>
-<h2 id="部署github-pages">部署Github Pages</h2>
-<p>站点经过打包之后就是纯粹的HTML文件，将<code>public</code>文件下的代码提交到个人帐号命名的<code>xxx.github.io</code>Repository上。
-访问<code>https://xxx.github.io</code>就可以看到生成的静态网页内容了。</p>
-<p>最后，我们也可以按照<code>Hugo</code>官方推荐的脚本，设置一下自动化打包部署到Github Pages上去。</p>
+            <h2 id="数组">数组</h2>
+<p>数组是PHP中非常强大、灵活的一种数据类型，它的底层实现为散列表(HashTable，也称作：哈希表)，
+除了我们熟悉的PHP用户空间的Array类型之外，内核中也随处用到散列表，比如函数、类、常量、已include文件的索引表、
+全局符号表等都用的HashTable存储。</p>
+<p>散列表是根据关键码值(Key value)而直接进行访问的数据结构，它的key - value之间存在一个映射函数，
+可以根据key通过映射函数直接索引到对应的value值，它不以关键字的比较为基本操作，
+采用直接寻址技术（就是说，它是直接通过key映射到内存地址上去的），从而加快查找速度，在理想情况下，
+无须任何比较就可以找到待查关键字，查找的期望时间为O(1)。</p>
+<h2 id="数组结构">数组结构</h2>
+<p>存放记录的数组称做散列表，这个数组用来存储value，而value具体在数组中的存储位置由映射函数根据key计算确定，映射函数可以采用取模的方式，
+key可以通过一些譬如“times 33”的算法得到一个整形值，然后与数组总大小取模得到在散列表中的存储位置。
+这是一个普通散列表的实现，PHP散列表的实现整体也是这个思路，只是有几个特殊的地方，下面就是PHP中HashTable的数据结构：</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
@@ -282,58 +239,80 @@ optionally runs the files through a build process, and publishes a website.</p>
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#999;font-weight:bold;font-style:italic">#!/bin/sh
-</span><span style="color:#999;font-weight:bold;font-style:italic"></span>
-<span style="color:#998;font-style:italic"># If a command fails then the deploy stops</span>
-<span style="color:#0086b3">set</span> -e
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#998;font-style:italic">//Bucket：散列表中存储的元素
+</span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">typedef</span> <span style="color:#000;font-weight:bold">struct</span> _Bucket {
+    zval              val; <span style="color:#998;font-style:italic">//存储的具体value，这里嵌入了一个zval，而不是一个指针
+</span><span style="color:#998;font-style:italic"></span>    zend_ulong        h;   <span style="color:#998;font-style:italic">//key根据times 33计算得到的哈希值，或者是数值索引编号
+</span><span style="color:#998;font-style:italic"></span>    zend_string      <span style="color:#000;font-weight:bold">*</span>key; <span style="color:#998;font-style:italic">//存储元素的key
+</span><span style="color:#998;font-style:italic"></span>} Bucket;
 
-<span style="color:#0086b3">printf</span> <span style="color:#d14">&#34;\033[0;32mDeploying updates to GitHub...\033[0m\n&#34;</span>
-
-<span style="color:#998;font-style:italic"># 删除打包文件夹</span>
-<span style="color:#998;font-style:italic">#rm -rf public</span>
-
-<span style="color:#998;font-style:italic">#printf &#34;\033[0;32mDeleteing public dictionary...\033[0m\n&#34;</span>
-
-<span style="color:#998;font-style:italic"># Build the project.</span>
-hugo -t  maupassant <span style="color:#998;font-style:italic"># if using a theme, replace with `hugo -t &lt;YOURTHEME&gt;`</span>
-
-<span style="color:#998;font-style:italic"># Go To Public folder</span>
-<span style="color:#0086b3">cd</span> public
-
-<span style="color:#998;font-style:italic">#git init</span>
-<span style="color:#998;font-style:italic"># Add changes to git.</span>
-git add .
-
-<span style="color:#998;font-style:italic"># Commit changes.</span>
-<span style="color:#008080">msg</span><span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#34;</span><span style="color:#d14">rebuilding site </span><span style="color:#000;font-weight:bold">$(</span>date<span style="color:#000;font-weight:bold">)</span><span style="color:#d14">&#34;</span>
-<span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">[</span> -n <span style="color:#d14">&#34;</span><span style="color:#008080">$*</span><span style="color:#d14">&#34;</span> <span style="color:#000;font-weight:bold">]</span>; <span style="color:#000;font-weight:bold">then</span>
-	<span style="color:#008080">msg</span><span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#34;</span><span style="color:#008080">$*</span><span style="color:#d14">&#34;</span>
-<span style="color:#000;font-weight:bold">fi</span>
-git commit -m <span style="color:#d14">&#34;</span><span style="color:#008080">$msg</span><span style="color:#d14">&#34;</span>
-
-<span style="color:#998;font-style:italic"># Push source and build repos.</span>
-<span style="color:#998;font-style:italic">#git push origin master</span>
-git push origin master
-<span style="color:#998;font-style:italic">#git push -f git@github.com:xiangxihenli/xiangxihenli.github.io.git master</span>
-
-<span style="color:#998;font-style:italic"># 回到原文件夹</span>
-<span style="color:#0086b3">cd</span> ..
-
+<span style="color:#998;font-style:italic">//HashTable结构
+</span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">typedef</span> <span style="color:#000;font-weight:bold">struct</span> _zend_array HashTable;
+<span style="color:#000;font-weight:bold">struct</span> _zend_array {
+    zend_refcounted_h gc;
+    <span style="color:#000;font-weight:bold">union</span> {
+        <span style="color:#000;font-weight:bold">struct</span> {
+            ZEND_ENDIAN_LOHI_4(
+                    zend_uchar    flags,
+                    zend_uchar    nApplyCount,
+                    zend_uchar    nIteratorsCount,
+                    zend_uchar    reserve)
+        } v;
+        uint32_t flags;
+    } u;
+    uint32_t          nTableMask; <span style="color:#998;font-style:italic">//哈希值计算掩码，等于nTableSize的负值(nTableMask = -nTableSize)
+</span><span style="color:#998;font-style:italic"></span>    Bucket           <span style="color:#000;font-weight:bold">*</span>arData;     <span style="color:#998;font-style:italic">//存储元素数组，指向第一个Bucket
+</span><span style="color:#998;font-style:italic"></span>    uint32_t          nNumUsed;   <span style="color:#998;font-style:italic">//已用Bucket数
+</span><span style="color:#998;font-style:italic"></span>    uint32_t          nNumOfElements; <span style="color:#998;font-style:italic">//哈希表有效元素数
+</span><span style="color:#998;font-style:italic"></span>    uint32_t          nTableSize;     <span style="color:#998;font-style:italic">//哈希表总大小，为2的n次方
+</span><span style="color:#998;font-style:italic"></span>    uint32_t          nInternalPointer; <span style="color:#998;font-style:italic">// 内部指针，用于遍历
+</span><span style="color:#998;font-style:italic"></span>    zend_long         nNextFreeElement; <span style="color:#998;font-style:italic">//下一个可用的数值索引,如:arr[] = 1;arr[&#34;a&#34;] = 2;arr[] = 3;  则nNextFreeElement = 2;
+</span><span style="color:#998;font-style:italic"></span>    dtor_func_t       pDestructor;
+};
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="总结">总结</h2>
-<p>整个搭建博客的过程还是很简单的，不需要处理服务器相关的事情，可以更多的把精力放在写作上面。博客的访问速度、安全性都相对更好一些。
-当然，因为使用的静态站点生成工具<code>Hugo</code>，所以没有办法很好的支持一些动态的内容。 可以通过对接第三方扩展实现功能。
-总的来说，这套方案很适合不想多折腾，专注于写博客的人。</p>
+</div><p>HashTable中有两个非常相近的值:nNumUsed、nNumOfElements，nNumOfElements表示哈希表已有元素数，那这个值不跟nNumUsed一样吗？为什么要定义两个呢？实际上它们有不同的含义，当将一个元素从哈希表删除时并不会将对应的Bucket移除，而是将Bucket存储的zval修改为IS_UNDEF，只有扩容时发现nNumOfElements与nNumUsed相差达到一定数量(这个数量是:ht-&gt;nNumUsed - ht-&gt;nNumOfElements &gt; (ht-&gt;nNumOfElements &raquo; 5))时才会将已删除的元素全部移除，重新构建哈希表。所以nNumUsed&gt;=nNumOfElements。</p>
+<p>HashTable中另外一个非常重要的值arData，这个值指向存储元素数组的第一个Bucket，插入元素时按顺序 依次插入 数组，比如第一个元素在arData[0]、第二个在arData[1]&hellip;arData[nNumUsed]。PHP数组的有序性正是通过arData保证的，这是第一个与普通散列表实现不同的地方。</p>
+<p>既然arData并不是按key映射的散列表，那么映射函数是如何将key与arData中的value建立映射关系的呢？</p>
+<p>先说之前PHPNG的版本中，HashTable是有arHash数组参数。这个数组由unit32_t类型的值组成。arHash数组跟arData的大小一样（都是nTableSize），并且都被分配了一段连续的内存区块。</p>
+<p>hash函数（DJBX33A用于字符串的键，DJBX33A是PHP用到的一种hash算法）返回的hash值一般是32位或者64位的整型数，这个数有点大，不能直接作为hash数组的索引。首先通过求余操作将这个数调整到hashtable的大小的范围之内。求余是通过计算hash &amp; (ht-&gt;nTableSize - 1)，而不是hash % ht-&gt;nTableSize，因为ht-&gt;nTableSize是2的幂，所以这两种计算的结果是一样的（注意第一种情况用的是与运算&amp;），第二种计算方式需要使用开销更大的整数除法运算。ht-&gt;nTableSize -1 的值保存在ht-&gt;nTableMask中。</p>
+<p>然后再在hash数组中查找索引为idx = ht-&gt;arHash[hash &amp; ht-&gt;nTableMask]的元素。这个索引对应的元素是冲突处理链表的头元素。所以ht-&gt;arData[idx]是我们要检查的第一个元素。如果这个元素中保存的键跟我们要查找的键相同，那么查找就搞定了。</p>
+<p>如果不的相同的话，则需要查找冲突处理链表的下一个元素，这个元素的索引保存在bucket-&gt;val.u2.next中，它保存在zval结构体中很少会用到的最后4个字节中。
+我们继续遍历这个链表（使用索引而不是指针）直到找到我们要找的bucket，或者是碰到INVALID_IDX——这意味着你要查找的key并不存在。</p>
+<p>后来PHP7对zend_array进行优化，将这个arHash也存放到在arData中，比较特别的是散列表在ht-&gt;arData内存之前，分配内存时这个散列表与Bucket数组一起分配，
+arData向后移动到了Bucket数组的起始位置，并不是申请内存的起始位置，这样散列表可以由arData指针向前移动访问到，
+即arData[-1]、arData[-2]、arData[-3]&hellip;&hellip;散列表的结构是uint32_t，它保存的是value在Bucket数组中的位置。</p>
+<p>事实上arData是一块分配的内存的中间部分，分配的内存真正的起始位置其实是pointer，而arData是计算过的一处中间位置，
+这样就可以用一个指针来表达俩个位置，分别通过前后偏移来获取位置， 比如-1对应的是arHash[0]。
+比如因为zend_object是变长的，所以不能在他后面有其他元素，为了实现一些自定义的object，那么我们会在zend_object前面分配自定义的元素等等。</p>
+<p>所以，整体来看HashTable主要依赖arData实现元素的存储、索引。插入一个元素时先将元素按先后顺序插入Bucket数组，位置是idx，再根据key的哈希值映射到散列表中的某个位置nIndex，将idx存入这个位置；查找时先在散列表中映射到nIndex，得到value在Bucket数组的位置idx，再从Bucket数组中取出元素。</p>
+<p>比如：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">$arr[&#34;a&#34;] = 1;
+$arr[&#34;b&#34;] = 2;
+$arr[&#34;c&#34;] = 3;
+$arr[&#34;d&#34;] = 4;
+
+unset($arr[&#34;c&#34;]);
+</code></pre></td></tr></table>
+</div>
+</div><p>对应的HashTable如下图所示。
+<img src="/img/20200403hashtable.png" alt="HashTable存储" title="HashTable实际存储"></p>
+<h2 id="总结">总结</h2>
+<p>关于PHP中数组和HashTable就简单介绍到这里，还有一些数组的扩容、删除基本都是常见操作。就不再写了。</p>
+<p>参考：
+<a href="https://gywbd.github.io/posts/2014/12/php7-new-hashtable-implementation.html">PHP 7中新的Hashtable实现和性能改进</a></p>
 
         </div>
 
@@ -347,11 +326,15 @@ git push origin master
     <h2 style="border-top: 1px solid #eee;">See Also</h2>
     <ul class="listing">
         
-        <li><a href="/post/my-first-post/">博客开通啦！</a></li>
+        <li><a href="/post/php-basic03/">PHP基础知识学习(03)--变量</a></li>
         
-        <li><a href="/archives/">归档</a></li>
+        <li><a href="/post/php-basic02/">PHP基础知识学习(02)--SAPI</a></li>
         
-        <li><a href="/search/">搜索</a></li>
+        <li><a href="/post/php-basic01/">PHP基础知识学习(01)--生命周期</a></li>
+        
+        <li><a href="/post/http-server-apache-work-mode/">Apache三种工作模式</a></li>
+        
+        <li><a href="/tutorial/how-to-create-you-own-blog/">使用Hugo&#43;GitHub Pages 搭建个人博客</a></li>
         
     </ul>
 </div>
@@ -362,7 +345,9 @@ git push origin master
             
             <ul class="clearfix">
                 
-                <li><a href='https://xiangxihenli.github.io/tags/%E6%95%99%E7%A8%8B'>教程</a></li>
+                <li><a href='https://xiangxihenli.github.io/tags/PHP'>PHP</a></li>
+                
+                <li><a href='https://xiangxihenli.github.io/tags/%E5%9F%BA%E7%A1%80'>基础</a></li>
                 
             </ul>
             

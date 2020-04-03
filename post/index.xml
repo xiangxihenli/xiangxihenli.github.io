@@ -6,10 +6,19 @@
     <description>Recent content in Posts on 相惜恨离</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Thu, 02 Apr 2020 09:32:12 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 02 Apr 2020 16:07:19 +0800</lastBuildDate>
     
 	<atom:link href="https://xiangxihenli.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>PHP基础知识学习(04)--Array</title>
+      <link>https://xiangxihenli.github.io/post/php-basic04/</link>
+      <pubDate>Thu, 02 Apr 2020 16:07:19 +0800</pubDate>
+      
+      <guid>https://xiangxihenli.github.io/post/php-basic04/</guid>
+      <description>数组 数组是PHP中非常强大、灵活的一种数据类型，它的底层实现为散列表(HashTable，也称作：哈希表)， 除了我们熟悉的PHP用户空间的Array类型之外，内核中也随处用到散列表，比如函数、类、常量、已include文件的索引表、 全局符号表等都用的HashTable存储。 散列表</description>
+    </item>
     
     <item>
       <title>PHP基础知识学习(03)--变量</title>
