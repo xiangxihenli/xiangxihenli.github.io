@@ -6,10 +6,55 @@
     <description>Recent content on 相惜恨离</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Thu, 27 Feb 2020 23:51:05 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 02 Apr 2020 09:32:12 +0800</lastBuildDate>
     
 	<atom:link href="https://xiangxihenli.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>PHP基础知识学习(03)--变量</title>
+      <link>https://xiangxihenli.github.io/post/php-basic03/</link>
+      <pubDate>Thu, 02 Apr 2020 09:32:12 +0800</pubDate>
+      
+      <guid>https://xiangxihenli.github.io/post/php-basic03/</guid>
+      <description>变量 大多数编程语言都有变量，变量通常有三个属性，变量名、变量值、变量类型。PHP是一种弱类型语言，变量可以在实际处理过程中进行隐式的转换。这一特性让开发变得十分便利。 在官方的PHP实现内部，所有变量使用同一种结构zval来保存，这个结构能表示PHP中的各种数据类型。 不仅包含变量的</description>
+    </item>
+    
+    <item>
+      <title>Apache三种工作模式</title>
+      <link>https://xiangxihenli.github.io/post/http-server-apache-work-mode/</link>
+      <pubDate>Wed, 01 Apr 2020 12:57:01 +0800</pubDate>
+      
+      <guid>https://xiangxihenli.github.io/post/http-server-apache-work-mode/</guid>
+      <description>摘要 Apache中主要有三种多进程的工作模式，分别是prefork，Worker，Event。 具体运行哪种模式，可以到Apache的配置文件中查询。 Prefork MPM Prefork MPM实现了一个非线程的、预派生的web服务器。它在Apache启动之初，就先预派生一些子进程，然后等待连接；可以减少频繁创建</description>
+    </item>
+    
+    <item>
+      <title>PHP基础知识学习(02)--SAPI</title>
+      <link>https://xiangxihenli.github.io/post/php-basic02/</link>
+      <pubDate>Wed, 01 Apr 2020 12:57:01 +0800</pubDate>
+      
+      <guid>https://xiangxihenli.github.io/post/php-basic02/</guid>
+      <description>摘要 在了解了PHP的生命周期后，再来详细了解一下SAPI是如何工作的。接下来从PHP主要的几个应用场景下去了解SAPI。 比如Apache，CLI，CGI，FastCGI，FPM。 说实话这几个概念之前可是困扰了我很久。 Apache Apache是一个开源的Web服务器。可以支持多种特性，大多通</description>
+    </item>
+    
+    <item>
+      <title>PHP基础知识学习(01)--生命周期</title>
+      <link>https://xiangxihenli.github.io/post/php-basic01/</link>
+      <pubDate>Tue, 31 Mar 2020 19:05:23 +0800</pubDate>
+      
+      <guid>https://xiangxihenli.github.io/post/php-basic01/</guid>
+      <description>PHP架构 PHP架构图： SAPI Server Application Programing Interface，PHP与外部应用交换接口。 常见有给Apache的mod_php5，mode_php7，CGI，IIS的ISAPI，还有Shell的CLI。 Zend Engine PHP的核心部分，包括编译器和执行器两部分。负责编译PHP语法为字节码，执行字节码。 P</description>
+    </item>
+    
+    <item>
+      <title>面试复习</title>
+      <link>https://xiangxihenli.github.io/post/interview01/</link>
+      <pubDate>Fri, 13 Mar 2020 11:32:24 +0800</pubDate>
+      
+      <guid>https://xiangxihenli.github.io/post/interview01/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>使用Hugo&#43;GitHub Pages 搭建个人博客</title>

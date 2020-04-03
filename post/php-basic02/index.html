@@ -1,0 +1,528 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>PHP基础知识学习(02)--SAPI | 相惜恨离</title>
+    <meta property="og:title" content="PHP基础知识学习(02)--SAPI - 相惜恨离">
+    <meta property="og:type" content="article">
+        
+    <meta property="article:published_time" content='2020-04-01T12:57:01&#43;08:00'>
+        
+        
+    <meta property="article:modified_time" content='2020-04-01T12:57:01&#43;08:00'>
+        
+    <meta name="Keywords" content="php,laravel,golang,go语言,go语言笔记,java,博客,项目管理,python,软件架构,公众号,小程序">
+    <meta name="description" content="PHP基础知识学习(02)--SAPI">
+        
+    <meta name="author" content="相惜恨离">
+    <meta property="og:url" content="https://xiangxihenli.github.io/post/php-basic02/">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href='/css/normalize.css'>
+    <link rel="stylesheet" href='/css/style.css'>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    
+
+
+    
+    
+        <link rel="stylesheet" href='/css/custom.css'>
+    
+</head>
+
+
+<body>
+    <header id="header" class="clearfix">
+    <div class="container">
+        <div class="col-group">
+            <div class="site-name ">
+                
+                    <a id="logo" href="https://xiangxihenli.github.io">
+                        相惜恨离
+                    </a>
+                
+                <p class="description">专注于PHP、Java、Go语言(golang)、移动互联网、项目管理、软件架构</p>
+            </div>
+            <div>
+                <nav id="nav-menu" class="clearfix">
+                    <a class="current" href="https://xiangxihenli.github.io">首页</a>
+                    
+                    <a  href="https://xiangxihenli.github.io/tutorial" title="教程">教程</a>
+                    
+                    <a  href="https://xiangxihenli.github.io/archives" title="归档">归档</a>
+                    
+                    <a  href="https://xiangxihenli.github.io/about" title="关于">关于</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <div id="body">
+        <div class="container">
+            <div class="col-group">
+
+                <div class="col-8" id="main">
+                    
+<div class="res-cons">
+    <style type="text/css">
+    .post-toc {
+        position: fixed;
+        width: 200px;
+        margin-left: -230px;
+        padding: 5px 10px;
+        font-family: Athelas, STHeiti, Microsoft Yahei, serif;
+        font-size: 12px;
+        border: 1px solid rgba(0, 0, 0, .07);
+        border-radius: 5px;
+        background-color: rgba(255, 255, 255, 0.98);
+        background-clip: padding-box;
+        -webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, .125);
+        box-shadow: 1px 1px 2px rgba(0, 0, 0, .125);
+        word-wrap: break-word;
+        white-space: nowrap;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        z-index: 999;
+        cursor: pointer;
+        max-height: 70%;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .post-toc .post-toc-title {
+        width: 100%;
+        margin: 0 auto;
+        font-size: 17px;
+        font-weight: 400;
+        text-transform: uppercase;
+         
+    }
+
+    .post-toc .post-toc-content {
+        font-size: 15px;
+    }
+
+    .post-toc .post-toc-content>nav>ul {
+        margin: 10px 0;
+    }
+
+    .post-toc .post-toc-content ul {
+        padding-left: 20px;
+        list-style: square;
+        margin: 0.5em;
+        line-height: 1.8em;
+    }
+
+    .post-toc .post-toc-content ul ul {
+        padding-left: 15px;
+        display: none;
+    }
+
+    @media print,
+    screen and (max-width:1057px) {
+        .post-toc {
+            display: none;
+        }
+    }
+</style>
+<div class="post-toc" style="position: absolute; top: 188px;">
+    <h2 class="post-toc-title">目录</h2>
+    <div class="post-toc-content">
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#摘要">摘要</a></li>
+    <li><a href="#apache">Apache</a>
+      <ul>
+        <li><a href="#apache与php">Apache与PHP</a></li>
+      </ul>
+    </li>
+    <li><a href="#apache-hook机制">Apache Hook机制</a></li>
+    <li><a href="#cgi">CGI</a></li>
+    <li><a href="#cgi工作流程">CGI工作流程</a></li>
+    <li><a href="#fastcgi">FastCGI</a></li>
+    <li><a href="#fastcgi工作流程">FastCGI工作流程</a></li>
+    <li><a href="#fpm">FPM</a></li>
+    <li><a href="#总结">总结</a></li>
+  </ul>
+</nav>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var postToc = $(".post-toc");
+        if (postToc.length) {
+            var leftPos = $("#main").offset().left;
+            if(leftPos<220){
+                postToc.css({"width":leftPos-10,"margin-left":(0-leftPos)})
+            }
+
+            var t = postToc.offset().top - 20,
+                a = {
+                    start: {
+                        position: "absolute",
+                        top: t
+                    },
+                    process: {
+                        position: "fixed",
+                        top: 20
+                    },
+                };
+            $(window).scroll(function () {
+                var e = $(window).scrollTop();
+                e < t ? postToc.css(a.start) : postToc.css(a.process)
+            })
+        }
+    })
+</script>
+
+    <article class="post">
+        <header>
+            <h1 class="post-title">PHP基础知识学习(02)--SAPI</h1>
+        </header>
+        <date class="post-meta meta-date">
+            2020年4月1日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='https://xiangxihenli.github.io/categories/PHP%E5%9F%BA%E7%A1%80'>PHP基础</a></span>
+            
+        </div>
+        
+        
+        <div class="post-meta">
+            <span id="busuanzi_container_page_pv">|<span id="busuanzi_value_page_pv"></span><span>
+                    阅读</span></span>
+        </div>
+        
+        
+        <div class="post-content">
+            <h2 id="摘要">摘要</h2>
+<p>在了解了PHP的生命周期后，再来详细了解一下SAPI是如何工作的。接下来从PHP主要的几个应用场景下去了解SAPI。
+比如<code>Apache</code>，<code>CLI</code>，<code>CGI</code>，<code>FastCGI</code>，<code>FPM</code>。
+说实话这几个概念之前可是困扰了我很久。</p>
+<h2 id="apache">Apache</h2>
+<p>Apache是一个开源的Web服务器。可以支持多种特性，大多通过模块扩展实现。常见的模块有<code>mod_auth</code>，<code>mod_rewrite</code>，<code>mod_ssl</code>等。</p>
+<h3 id="apache与php">Apache与PHP</h3>
+<p>其中Apache与PHP交互的特性也是依赖于模块提供的，PHP5和7分别使用<code>mod_php5</code>、<code>mod_php7</code>。
+这些PHP模块的作用是接受Apache传递过来的PHP文件请求，然后处理这些请求，并将处理结果返回给Apache。</p>
+<p>PHP模块通过注册Apache的ap_hook_post_config进行挂钩，在Apache启动时启动此模块接受PHP文件请求(MINIT阶段)。
+Apache模块扩展的定义需要按照Apache模块的下面格式定义结构体，其中register_hooks就是Apache在调用模块时会进行注册的钩子函数。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">module AP_MODULE_DECLARE_DATA   example_module <span style="color:#000;font-weight:bold">=</span>
+{ 
+    STANDARD20_MODULE_STUFF,
+    create_dir_conf, <span style="color:#998;font-style:italic">/* Per-directory configuration handler */</span>
+    merge_dir_conf,  <span style="color:#998;font-style:italic">/* Merge handler for per-directory configurations */</span>
+    create_svr_conf, <span style="color:#998;font-style:italic">/* Per-server configuration handler */</span>
+    merge_svr_conf,  <span style="color:#998;font-style:italic">/* Merge handler for per-server configurations */</span>
+    directives,      <span style="color:#998;font-style:italic">/* Any directives we may have for httpd */</span>
+    register_hooks   <span style="color:#998;font-style:italic">/* Our hook registering function */</span>
+};
+</code></pre></td></tr></table>
+</div>
+</div><p>常用的Hook：ap_hook_child_init，ap_hook_pre_config，ap_hook_post_config，ap_hook_translate_name，ap_hook_handler，ap_hook_log_transaction</p>
+<p>实际在PHP模块中用到的hook如下：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">php_ap2_register_hook</span>(apr_pool_t <span style="color:#000;font-weight:bold">*</span>p)
+{
+    <span style="color:#998;font-style:italic">//配置文件读取前的钩子，非常早期的钩子
+</span><span style="color:#998;font-style:italic"></span>    ap_hook_pre_config(php_pre_config, <span style="color:#0086b3">NULL</span>, <span style="color:#0086b3">NULL</span>, APR_HOOK_MIDDLE);
+    <span style="color:#998;font-style:italic">//配置文件解析后，进程fork前。在这个过程时，启动PHP
+</span><span style="color:#998;font-style:italic"></span>    ap_hook_post_config(php_apache_server_startup, <span style="color:#0086b3">NULL</span>, <span style="color:#0086b3">NULL</span>, APR_HOOK_MIDDLE); 
+    <span style="color:#998;font-style:italic">// 请求发生时
+</span><span style="color:#998;font-style:italic"></span>    ap_hook_handler(php_handler, <span style="color:#0086b3">NULL</span>, <span style="color:#0086b3">NULL</span>, APR_HOOK_MIDDLE); 
+    <span style="color:#998;font-style:italic">// 子进程产生时
+</span><span style="color:#998;font-style:italic"></span>    ap_hook_child_init(php_apache_child_init, <span style="color:#0086b3">NULL</span>, <span style="color:#0086b3">NULL</span>, APR_HOOK_MIDDLE);
+}
+</code></pre></td></tr></table>
+</div>
+</div><p>以上代码声明了pre_config，post_config，handler和child_init 4个挂钩以及对应的处理函数。
+其中pre_config，post_config，child_init是启动挂钩，它们在服务器启动时调用。
+handler挂钩是请求挂钩，它在服务器处理请求时调用。其中在post_config挂钩中启动php。
+它通过php_apache_server_startup函数实现。php_apache_server_startup函数通过调用sapi_startup启动sapi，
+并通过调用php_apache2_startup来注册sapi module struct，
+最后调用php_module_startup来初始化PHP， 其中又会初始化Zend引擎，
+以及填充zend_module_struct中 的treat_data成员(通过php_startup_sapi_content_types)等。</p>
+<p>如此一来，PHP的启动就成功了。这里似乎没有说明sapi的作用，实际上在PHP请求时，如果要获取请求的相关数据比如cookie，URL等，
+会通过sapi提供的函数获取Apache对应的参数。对于每一个服务器在加载时，我们都指定了sapi_module，而Apache的sapi_module是apache2_sapi_module。
+其中对应read_cookies方法的是php_apache_sapi_read_cookies函数。 这也是定义SAPI结构的理由：统一接口，面向接口的编程，具有更好的扩展性和适应性。</p>
+<h2 id="apache-hook机制">Apache Hook机制</h2>
+<p>Apache 的Hook机制是指：Apache 允许模块(包括内部模块和外部模块，例如mod_php5.so，mod_perl.so等)将自定义的函数注入到请求处理循环中。
+换句话说，模块可以在Apache的任何一个处理阶段中挂接(Hook)上自己的处理函数，从而参与Apache的请求处理过程。
+mod_php5.so/ php5apache2.dll就是将所包含的自定义函数，通过Hook机制注入到Apache中，在Apache处理流程的各个阶段负责处理php请求。</p>
+<h2 id="cgi">CGI</h2>
+<p>CGI的全称是&quot;通用网关接口&rdquo;(Common Gateway Interface)，是一种Web服务器运行时的外部程序的规范。按照CGI编写的程序可以扩展服务器功能。CGI描述了客户端和这个程序之间传输数据的一种标准。
+CGI的一个目的就是要独立于任何语言，所以CGI可以用任何一种语言编写，只要这种语言具有标准输入、输出、和环境变量。</p>
+<h2 id="cgi工作流程">CGI工作流程</h2>
+<ol>
+<li>客户端发起请求：当用户访问Web应用时，会发起一个HTTP请求。如果请求时一个普通文件，会直接将文件传送给浏览器。如果时CGI程序或者应用，则激活相应的CGI程序。</li>
+<li>Web服务器激活CGI程序： Web服务器将HTTP请求数据按一定格式解析出来，然后fork一个子进程，在该子进程中通过标准输入和环境变量传入到URL指定的CGI程序($_SERVER)。
+这个过程就是Linux的fork-and-execute。</li>
+<li>CGI程序对客户端的请求做出反应：CGI通过Web服务器共享的数据进行处理，并返回相应格式的数据。</li>
+<li>WEB服务器将数据返回给浏览器：浏览器将数据返回给对应客户端，并销毁子进程。</li>
+</ol>
+<p>这个流程有一个比较严重的问题，就是在用户请求数据非常多的时候，因为每次都要fork出子进程，执行，销毁，所以会大量挤占系统的内存和CPU时间，性能低效。</p>
+<h2 id="fastcgi">FastCGI</h2>
+<p>FastCGI是Web服务器和处理程序之间通信的一种协议，是CGI的一种改进方案。FastCGI像是一个常驻(long-lived)型的CGI.
+它可以一直执行，请求到达时不会费时间去fork一个进程来处理(这是CGI最为人诟病的fork-and-execute模式)。<br>
+FastCGI是与语言无关的，可伸缩的CGI开发扩展，将CGI解释器进程保持在内存中，以此获得较高的性能。</p>
+<h2 id="fastcgi工作流程">FastCGI工作流程</h2>
+<p>首先在次说明FastCGI是一种协议方式。</p>
+<ol>
+<li>Web Server启动时载入FastCGI进程管理器</li>
+<li>FastCGI进程管理器自身初始化，启动多个CGI解释器进程，并等待来自Web Server的链接。</li>
+<li>当客户端请求到达Web Server时，FastCGI进程管理器选择并连接到一个CGI解释器。 Web Server将CGI环境变量和标准输入发送到FastCGI子进程php-cgi。</li>
+<li>FastCGI子进程完成处理后将标准输出和错误信息从同一连接返回Web Server。当FastCGI子进程关闭连接时， 请求便告处理完成。
+FastCGI子进程接着等待并处理来自FastCGI进程管理器(运行在Web Server中)的下一个连接。
+在CGI模式中，php-cgi在此便退出了。</li>
+</ol>
+<p>PHP的CGI实现了Fastcgi协议（也实现了CGI协议）， 当启动时创建TCP/UDP协议的服务器的socket监听，并接收相关请求进行处理。
+随后就进入了PHP的生命周期： 模块初始化，sapi初始化，处理PHP请求，模块关闭，sapi关闭等就构成了整个CGI的生命周期。</p>
+<p>FastCGI 与传统 CGI 模式的区别之一则是 Web 服务器不是直接执行 CGI 程序了，而是通过 Socket 与 FastCGI 进程管理器进行交互，也正是由于 FastCGI 进程管理器是基于 Socket 通信的，所以也是分布式的，
+Web 服务器可以和 CGI 响应器服务器分开部署。Web 服务器需要将数据 CGI/1.1 的规范封装在遵循 FastCGI 协议包中发送给 FastCGI 响应器程序。</p>
+<h2 id="fpm">FPM</h2>
+<p>FPM(FastCGI Process Manager)是PHP FastCGI运行模式的一个进程管理器，主要用于管理FastCGI，提供更好的性能。<br>
+FPM是多进程单线程阻塞模型。类似于Apache的Prefork，有master进程和worker进程，master进程负责管理worker进程。
+FPM的实现就是创建一个master进程，在master进程中创建并监听socket，然后fork出多个子进程，这些子进程各自accept请求。
+子进程的处理非常简单，它在启动后阻塞在accept上，有请求到达后开始读取请求数据，读取完成后开始处理然后再返回，
+在这期间是不会接收其它请求的，也就是说fpm的子进程同时只能响应一个请求，只有把这个请求处理完成后才会accept下一个请求，
+这一点与nginx的事件驱动有很大的区别，nginx的子进程通过epoll管理套接字，如果一个请求数据还未发送完成则会处理下一个请求，
+即一个进程会同时连接多个请求，它是非阻塞的模型，只处理活跃的套接字。</p>
+<p>fpm的master进程与worker进程之间不会直接进行通信，master通过共享内存获取worker进程的信息，比如worker进程当前状态、已处理请求数等，
+当master进程要杀掉一个worker进程时则通过发送信号的方式通知worker进程。</p>
+<p>fpm可以同时监听多个端口，每个端口对应一个worker pool，而每个pool下对应多个worker进程，类似nginx中server概念。</p>
+<h2 id="总结">总结</h2>
+<p>主要介绍了PHP在各种常见的场景下，是如何使用SAPI与外部应用打交道的，比如和Apache结合使用了Apache模块<code>mod_php</code>和PHP自身接口<code>apache2handler</code>。
+而和Nginx交互通常是对接CGI协议，Nginx实现CGI的解析和传输，PHP实现CGI的接收和处理。因为CGI用完即销毁，于是有了常驻内存的CGI协议FastCGI。
+同时因为FastCGI常驻内存，于是就需要更好的管理FastCGI，于是就有了FPM，FastCGI的进程管理器。</p>
+
+        </div>
+
+        
+
+
+        
+
+
+<div class="post-archive">
+    <h2 style="border-top: 1px solid #eee;">See Also</h2>
+    <ul class="listing">
+        
+        <li><a href="/post/php-basic01/">PHP基础知识学习(01)--生命周期</a></li>
+        
+        <li><a href="/post/http-server-apache-work-mode/">Apache三种工作模式</a></li>
+        
+        <li><a href="/post/interview01/">面试复习</a></li>
+        
+        <li><a href="/tutorial/how-to-create-you-own-blog/">使用Hugo&#43;GitHub Pages 搭建个人博客</a></li>
+        
+        <li><a href="/post/my-first-post/">博客开通啦！</a></li>
+        
+    </ul>
+</div>
+
+
+
+        <div class="post-meta meta-tags">
+            
+            <ul class="clearfix">
+                
+                <li><a href='https://xiangxihenli.github.io/tags/PHP'>PHP</a></li>
+                
+                <li><a href='https://xiangxihenli.github.io/tags/%E5%9F%BA%E7%A1%80'>基础</a></li>
+                
+            </ul>
+            
+        </div>
+    </article>
+    
+    
+
+    
+    
+</div>
+
+                </div>
+
+                <div id="secondary">
+    <section class="widget">
+        <form id="search" action='https://xiangxihenli.github.io/search/' method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+      
+      <input type="text" name="q" maxlength="20" placeholder="Search">
+      <input type="hidden" name="sitesearch" value="https://xiangxihenli.github.io">
+      <button type="submit" class="submit icon-search"></button>
+</form>
+    </section>
+    
+    <section class="widget">
+        <h3 class="widget-title">最近文章</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://xiangxihenli.github.io/post/php-basic03/" title="PHP基础知识学习(03)--变量">PHP基础知识学习(03)--变量</a>
+    </li>
+    
+    <li>
+        <a href="https://xiangxihenli.github.io/post/http-server-apache-work-mode/" title="Apache三种工作模式">Apache三种工作模式</a>
+    </li>
+    
+    <li>
+        <a href="https://xiangxihenli.github.io/post/php-basic02/" title="PHP基础知识学习(02)--SAPI">PHP基础知识学习(02)--SAPI</a>
+    </li>
+    
+    <li>
+        <a href="https://xiangxihenli.github.io/post/php-basic01/" title="PHP基础知识学习(01)--生命周期">PHP基础知识学习(01)--生命周期</a>
+    </li>
+    
+    <li>
+        <a href="https://xiangxihenli.github.io/post/interview01/" title="面试复习">面试复习</a>
+    </li>
+    
+    <li>
+        <a href="https://xiangxihenli.github.io/tutorial/how-to-create-you-own-blog/" title="使用Hugo&#43;GitHub Pages 搭建个人博客">使用Hugo&#43;GitHub Pages 搭建个人博客</a>
+    </li>
+    
+    <li>
+        <a href="https://xiangxihenli.github.io/post/my-first-post/" title="博客开通啦！">博客开通啦！</a>
+    </li>
+    
+</ul>
+
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title">分类</h3>
+<ul class="widget-list">
+    
+    <li><a href="https://xiangxihenli.github.io/categories/HTTP%E6%9C%8D%E5%8A%A1%E5%99%A8/">HTTP服务器 (1)</a></li>
+    
+    <li><a href="https://xiangxihenli.github.io/categories/PHP%E5%9F%BA%E7%A1%80/">PHP基础 (3)</a></li>
+    
+    <li><a href="https://xiangxihenli.github.io/categories/%E6%95%99%E7%A8%8B/">教程 (1)</a></li>
+    
+    <li><a href="https://xiangxihenli.github.io/categories/%E7%94%9F%E6%B4%BB/">生活 (1)</a></li>
+    
+    <li><a href="https://xiangxihenli.github.io/categories/%E9%9D%A2%E8%AF%95/">面试 (1)</a></li>
+    
+</ul>
+    </section>
+
+    <section class="widget">
+        <h3 class="widget-title">标签</h3>
+<div class="tagcloud">
+    
+    <a href="https://xiangxihenli.github.io/tags/Apache/">Apache</a>
+    
+    <a href="https://xiangxihenli.github.io/tags/HTTP/">HTTP</a>
+    
+    <a href="https://xiangxihenli.github.io/tags/HTTP-Server/">HTTP Server</a>
+    
+    <a href="https://xiangxihenli.github.io/tags/PHP/">PHP</a>
+    
+    <a href="https://xiangxihenli.github.io/tags/%E5%9F%BA%E7%A1%80/">基础</a>
+    
+    <a href="https://xiangxihenli.github.io/tags/%E6%95%99%E7%A8%8B/">教程</a>
+    
+    <a href="https://xiangxihenli.github.io/tags/%E7%94%9F%E6%B4%BB/">生活</a>
+    
+    <a href="https://xiangxihenli.github.io/tags/%E9%9D%A2%E8%AF%95/">面试</a>
+    
+</div>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title">其它</h3>
+        <ul class="widget-list">
+            <li><a href="https://xiangxihenli.github.io/index.xml">文章 RSS</a></li>
+        </ul>
+    </section>
+</div>
+            </div>
+        </div>
+    </div>
+    <footer id="footer">
+    <div class="container">
+        &copy; 2020 <a href="https://xiangxihenli.github.io">相惜恨离 By 相惜恨离</a>.
+        Powered by <a rel="nofollow noreferer noopener" href="https://gohugo.io" target="_blank">Hugo</a>.
+        <a href="https://www.flysnow.org/" target="_blank">Theme</a> based on <a href="https://github.com/flysnow-org/maupassant-hugo" target="_blank">maupassant</a>.
+        
+    </div>
+</footer>
+
+
+    
+    <script type="text/javascript">
+        window.MathJax = {
+            tex2jax: {
+                inlineMath: [['$', '$']],
+                processEscapes: true
+                }
+            };
+    </script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-91862329-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+    <script type="text/javascript" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+
+
+
+
+</body>
+
+</html>
