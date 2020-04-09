@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>代理 on 相惜恨离</title>
+    <link>https://xiangxihenli.github.io/tags/%E4%BB%A3%E7%90%86/</link>
+    <description>Recent content in 代理 on 相惜恨离</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Tue, 19 Jun 2018 16:39:18 +0800</lastBuildDate>
+    
+	<atom:link href="https://xiangxihenli.github.io/tags/%E4%BB%A3%E7%90%86/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>如何在Ubuntu中搭建网络代理服务</title>
+      <link>https://xiangxihenli.github.io/tutorial/how-to-create-proxy-server-on-ubuntu/</link>
+      <pubDate>Tue, 19 Jun 2018 16:39:18 +0800</pubDate>
+      
+      <guid>https://xiangxihenli.github.io/tutorial/how-to-create-proxy-server-on-ubuntu/</guid>
+      <description>原因 最近用爬虫爬一些网站，发现有时候网络不太稳定，换个网络环境之后，就可以爬取到结果。 所以就有了使用代理去请求的想法了。 网上提供的免费代理招了几家不太好用，付费代理倒是还行。 本着能动手解决就不花钱的精神(穷)，所以就有了构建代理的想法。所以最后选择了在服务器搭建代理。 如何搭建 查阅</description>
+    </item>
+    
+  </channel>
+</rss>

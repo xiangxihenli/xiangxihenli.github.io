@@ -6,20 +6,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Apache三种工作模式 | 相惜恨离</title>
-    <meta property="og:title" content="Apache三种工作模式 - 相惜恨离">
+    <title>从零开始布置你的个人网站（三） | 相惜恨离</title>
+    <meta property="og:title" content="从零开始布置你的个人网站（三） - 相惜恨离">
     <meta property="og:type" content="article">
         
-    <meta property="article:published_time" content='2020-04-01T12:57:01&#43;08:00'>
+    <meta property="article:published_time" content='2017-07-15T15:57:06&#43;08:00'>
         
         
-    <meta property="article:modified_time" content='2020-04-01T12:57:01&#43;08:00'>
+    <meta property="article:modified_time" content='2017-07-15T15:57:06&#43;08:00'>
         
     <meta name="Keywords" content="php,laravel,golang,go语言,go语言笔记,java,博客,项目管理,python,软件架构,公众号,小程序">
-    <meta name="description" content="Apache三种工作模式">
+    <meta name="description" content="从零开始布置你的个人网站（三）">
         
     <meta name="author" content="相惜恨离">
-    <meta property="og:url" content="https://xiangxihenli.github.io/post/http-server-apache-work-mode/">
+    <meta property="og:url" content="https://xiangxihenli.github.io/tutorial/create-your-own-website03/">
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 
     <link rel="stylesheet" href='/css/normalize.css'>
@@ -50,7 +50,7 @@
             </div>
             <div>
                 <nav id="nav-menu" class="clearfix">
-                    <a class="current" href="https://xiangxihenli.github.io">首页</a>
+                    <a class="" href="https://xiangxihenli.github.io">首页</a>
                     
                     <a  href="https://xiangxihenli.github.io/tutorial" title="教程">教程</a>
                     
@@ -137,10 +137,9 @@
     <div class="post-toc-content">
         <nav id="TableOfContents">
   <ul>
-    <li><a href="#摘要">摘要</a></li>
-    <li><a href="#prefork-mpm">Prefork MPM</a></li>
-    <li><a href="#worker-mpm">Worker MPM</a></li>
-    <li><a href="#event-mpm">Event MPM</a></li>
+    <li><a href="#线上部署项目">线上部署项目</a></li>
+    <li><a href="#git-发布项目">Git 发布项目</a></li>
+    <li><a href="#连接数据库">连接数据库</a></li>
   </ul>
 </nav>
     </div>
@@ -175,16 +174,16 @@
 
     <article class="post">
         <header>
-            <h1 class="post-title">Apache三种工作模式</h1>
+            <h1 class="post-title">从零开始布置你的个人网站（三）</h1>
         </header>
         <date class="post-meta meta-date">
-            2020年4月1日
+            2017年7月15日
         </date>
         
         <div class="post-meta">
             <span>|</span>
             
-            <span class="meta-category"><a href='https://xiangxihenli.github.io/categories/HTTP%E6%9C%8D%E5%8A%A1%E5%99%A8'>HTTP服务器</a></span>
+            <span class="meta-category"><a href='https://xiangxihenli.github.io/categories/%E6%95%99%E7%A8%8B'>教程</a></span>
             
         </div>
         
@@ -196,110 +195,89 @@
         
         
         <div class="post-content">
-            <h2 id="摘要">摘要</h2>
-<p>Apache中主要有三种多进程的工作模式，分别是<code>prefork</code>，<code>Worker</code>，<code>Event</code>。
-具体运行哪种模式，可以到Apache的配置文件中查询。</p>
-<h2 id="prefork-mpm">Prefork MPM</h2>
-<p>Prefork MPM实现了一个非线程的、预派生的web服务器。它在Apache启动之初，就先预派生一些子进程，然后等待连接；可以减少频繁创建和销毁进程的开销，
-每个子进程只有一个线程，在一个时间点内，只能处理一个请求。这是一个成熟稳定，可以兼容新老模块，也不需要担心线程安全问题，
-但是一个进程相对占用资源，消耗大量内存，不擅长处理高并发的场景。</p>
-<p><strong>优点</strong>：成熟，兼容所有新老模块。进程之间完全独立，使得它非常稳定。同时，不需要担心线程安全的问题。</p>
-<p><strong>缺点</strong>：一个进程相对占用更多的系统资源，消耗更多的内存。而且，它并不擅长处理高并发请求，在这种场景下，
-它会将请求放进队列中，一直等到有可用进程，请求才会被处理。</p>
-<pre><code class="language-apacheconfig" data-lang="apacheconfig">&lt;IfModule mpm_prefork_module&gt;
-    #服务器启动时建立的子进程数量
-    StartServers          5
-
-    #空闲子进程的最小数量，默认5；
-    #如果当前空闲子进程数少于MinSpareServers ，那么Apache将会产生新的子进程。此参数不要设的太大。
-    MinSpareServers       5
-
-    #空闲子进程的最大数量，默认10；
-    #如果当前有超过MaxSpareServers数量的空闲子进程，那么父进程会杀死多余的子进程。
-    #此参数也不需要设置太大，如果你将其设置比 MinSpareServers 小，
-    #Apache会自动将其修改为MinSpareServers+1。
-    MaxSpareServers      10
-
-    #限定服务器同一时间内客户端最大接入的请求数量，默认是150；
-    #任何超过了该限制的请求都要进入等待队列，一旦一个个连接被释放，队列中的请求才将得到服务。
-    MaxClients          150
-
-    #每个子进程在其生命周期内允许最大的请求数量，
-    #如果请求总数已经达到这个数值，子进程将会结束，如果设置为0，子进程将永远不会结束。
-    #若该值设置为非0值，可以防止运行PHP导致的内存泄露。
-    MaxRequestsPerChild   0
-&lt;/IfModule&gt;
-</code></pre><ul>
-<li>创建的进程数，最多达到每秒32个，直到满足MinSpareServers设置的值为止。这就是预派生（prefork）的由来。这种模式可以不必在请求到来时再产生新的进程，从而减小了系统开销以增加性能。</li>
-<li>并发量请求数到达MaxClients（如256）时，而空闲进程只有10个。apache为继续增加创建进程。直到进程数到达256个。</li>
-<li>当并发量高峰期过去了，并发请求数可能只有一个时，apache逐渐删除进程，直到进程数到达MaxSpareServers为止。</li>
-</ul>
-<h2 id="worker-mpm">Worker MPM</h2>
-<p>和prefork模式相比，Worker使用了多进程和多线程的混合模式，Worker模式也同样会先预派生一些子进程（数量比较少），
-每个子进程能够生成一些服务线程和一个监听线程，该监听线程监听接入请求并将其传递给服务线程处理和应答。
-线程比起进程会更轻量，因为线程是通过共享父进程的内存空间，
-因此，内存的占用会减少一些，在高并发的场景下会比prefork有更多可用的线程，表现会更优秀一些；</p>
-<p>另外，如果一个线程出现了问题也会导致同一进程下的线程出现问题，如果是多个线程出现问题，也只是影响Apache的一部分，而不是全部。
-由于用到多进程多线程，需要考虑到线程的安全，在使用keep-alive长连接的时候，某个线程会一直被占用，即使中间没有请求，
-需要等待到超时才会被释放（该问题在prefork模式下也存在）。</p>
-<p><strong>优点</strong>：占据更少的内存，高并发下表现更优秀。</p>
-<p><strong>缺点</strong>：必须考虑线程安全的问题，因为多个子线程是共享父进程的内存地址的。如果使用keep-alive的长连接方式，
-也许中间几乎没有请求，这时就会发生阻塞，线程被挂起，需要一直等待到超时才会被释放。如果过多的线程，被这样占据，
-也会导致在高并发场景下的无服务线程可用。（该问题在prefork模式下，同样会发生）</p>
-<pre><code class="language-apacheconfig" data-lang="apacheconfig">&lt;IfModule mpm_worker_module&gt;
-    #服务器启动时建立的子进程数量
-    StartServers          2
-
-    #限定服务器同一时间内客户端最大接入的请求数量，默认是150；
-    #任何超过了该限制的请求都要进入等待队列，一旦一个个连接被释放，队列中的请求才将得到服务。
-    MaxClients          150
-
-    #空闲子进程的最小数量
-    MinSpareThreads      25
-
-    #空闲子进程的最大数量
-    MaxSpareThreads      75 
-
-    #每个子进程产生的线程数量
-    ThreadsPerChild      25
-
-    #每个子进程在其生命周期内允许最大的请求数量，如果请求总数已经达到这个数值，子进程将会结束，
-    #如果设置为0，子进程将永远不会结束。将该值设置为非0值，可以防止运行PHP导致的内存泄露。
-    MaxRequestsPerChild   0
-&lt;/IfModule&gt;
-</code></pre><ul>
-<li>由master进程生成StartServers个子进程，每个子进程中包含固定的ThreadsPerChild线程数，各个线程独立地处理请求。</li>
-<li>为了尽量避免在请求到来才生成线程，MinSpareThreads和MaxSpareThreads设置了最少和最多的空闲线程数；而MaxClients设置了所有子进程中的线程总数。</li>
-<li>如果现有子进程中的线程总数不能满足负载，控制进程将派生新的子进程。</li>
-</ul>
-<h2 id="event-mpm">Event MPM</h2>
-<p>Event模型是为了解决长连接(Keep-alive)问题而生的。使用Worker模型，一个线程对应一个请求，当一个请求为长连接的时候，线程就会保持当长连接状态，
-等待客户端的下一个请求。这样子当前线程就不能处理其他客户端请求了。</p>
-<p>Event模型跟Worker模型很像，也是多个进程+多个线程的混合模式，但是Event模型下每个进程会有一个单独的线程来管理这些keep-alive类型的线程。
-当有真实请求过来时，将请求传递给专门的服务线程，执行完毕后，又允许它释放。这样，一个线程就能处理几个请求了，实现了异步非阻塞。</p>
-<p>Event MPM在遇到某些不兼容的模块时，会失效，将会回退到worker模式，一个工作线程处理一个请求。官方自带的模块，全部是支持eventMPM的。</p>
-<pre><code class="language-apacheconfig" data-lang="apacheconfig">&lt;IfModule mpm_worker_module&gt;
-    #服务器启动时建立的子进程数量
-    StartServers             3
-
-    #空闲子进程的最小数量
-    MinSpareThreads         75
-
-    #空闲子进程的最小数量
-    MaxSpareThreads        250
-
-    #每个子进程产生的线程数量
-    ThreadsPerChild         25
-
-    #限定服务器同一时间内客户端最大接入的请求数量，默认是150；
-    #任何超过了该限制的请求都要进入等待队列，一旦一个个连接被释放，队列中的请求才将得到服务。
-    MaxRequestWorkers      400
-
-    #每个子进程在其生命周期内允许最大的请求数量，如果请求总数已经达到这个数值，子进程将会结束
-    #如果设置为0，子进程将永远不会结束。将该值设置为非0值，可以防止运行PHP导致的内存泄露。
-    MaxRequestsPerChild   0
-&lt;/IfModule&gt;
+            <h2 id="线上部署项目">线上部署项目</h2>
+<p>安装完成Laravel后，我们就下来就尝试如何把线上的代码，下载到服务器中。
+我们在部署项目的时候，通常都是把代码先放到git，coding，svn或者其他托管服务中，然后在从服务器下将代码下载下来。</p>
+<h2 id="git-发布项目">Git 发布项目</h2>
+<p>利用git来发布项目，首先我们需要下载安装git 的官方工具，<a href="https://git-scm.com/book/zh/v2/%E8%B5%B7%E6%AD%A5-%E5%AE%89%E8%A3%85-Git">git-安装地址</a>，根据git的官方文档，我们将git下载安装。</p>
+<p>然后我们登录到我们的github账号，</p>
+<ol>
+<li>创建新的repository
+<img src="https://imgconvert.csdnimg.cn/aHR0cDovL2ltZy5ibG9nLmNzZG4ubmV0LzIwMTcwNzE3MDkyMzI3NjY2?x-oss-process=image/format,png" alt="创建新的repository"></li>
+<li>填写项目名称，选择public也就会公开(私人服务需要付费)
+<img src="https://imgconvert.csdnimg.cn/aHR0cDovL2ltZy5ibG9nLmNzZG4ubmV0LzIwMTcwNzE3MDkzMTQyMzY1?x-oss-process=image/format,png" alt="填写名称"></li>
+<li>复制命令，到git bash中执行(需要项目已经提交到缓存区)
+<img src="https://imgconvert.csdnimg.cn/aHR0cDovL2ltZy5ibG9nLmNzZG4ubmV0LzIwMTcwNzE3MDkzMjM5ODE4?x-oss-process=image/format,png" alt="这里写图片描述"></li>
+</ol>
+<p>在发布之前，我们要现在我们的项目提交到git提交缓存区，所以接下来在我们的项目中，打开git bash 命令窗口，然后执行git 命令。</p>
+<p>首先在项目中，执行
+1、  初始化git</p>
+<pre><code> git init
 </code></pre>
+<p>2、 添加文件 等待上传  .号表示当前所有文件，子文件全部上传</p>
+<pre><code> git add .
+</code></pre>
+<p>3、将文件上传</p>
+<pre><code> git commit -m&quot;first commit&quot;
+</code></pre>
+<p>4、执行刚刚repository复制的代码</p>
+<pre><code>git remote add origin https://github.com/you/example.git
+git push -u origin master
+</code></pre>
+<p>这时候刷新刚刚的repository就发现项目已经上传了。</p>
+<p>接下来就是在服务器中下载我们的git 项目，首先到项目的git项目中 复制地址</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL2ltZy5ibG9nLmNzZG4ubmV0LzIwMTcwNzE3MTAwODQwMTYw?x-oss-process=image/format,png" alt="复制git地址"></p>
+<p>然后复制完了之后，直接到ubuntu中 /var/www下粘贴，同时写上我们的项目文件夹</p>
+<pre><code>&gt; git clone you-project-url you-dir
+</code></pre>
+<p>复制完项目文件夹之后，释放权限</p>
+<pre><code>&gt;chown -R :www-data /var/www/example
+&gt;//根据官方文档，/var/www/laravel/storage目录需要给网站用户写权限
+&gt;chmod -R 775 /var/www/example/storage
+</code></pre>
+<p>在浏览器中输入地址，OK，现在就可以访问你的项目了</p>
+<p>PS：在配置Laravel项目的时候，为了实现优雅访问，你还需要在你的apache开启re_write.mod 模块</p>
+<pre><code>&gt;a2enmod rewrite
+</code></pre>
+<p>同时在apache中site-availbale中的配置 添加上</p>
+<pre><code class="language-apacheconfig" data-lang="apacheconfig">    #exampel 填写你项目的名字
+    &lt;Directory /var/www/example/public&gt;
+        Options FollowSymLinks
+        AllowOverride All
+    &lt;/Directory&gt;
+</code></pre><p>重启你的apache</p>
+<pre><code>&gt;service apache2 restart
+</code></pre>
+<p>然后就可以实现优雅链接了。</p>
+<h2 id="连接数据库">连接数据库</h2>
+<p>链接数据库有两个地方需要注意一下，
+如果是远程访问，那么，需要开发3306端口，这个端口不仅需要在服务器控制台中开启，还要在ubuntu中开启。</p>
+<p>1、 首先查看端口是否打开
+<code>shell script netstat -an|grep 3306</code>
+<img src="https://imgconvert.csdnimg.cn/aHR0cDovL2ltZy5ibG9nLmNzZG4ubmV0LzIwMTcwNzE3MTMwMjU2MTA2?x-oss-process=image/format,png" alt="3306端口查询"></p>
+<p>现在3306端口绑定的IP地址是本地的127.0.0.1
+要开放3306端口，那么就到mysql配置中，ubuntu中具体位置在</p>
+<pre><code>&gt;vi /etc/mysql/mysql.conf.d/mysql.conf
+</code></pre>
+<p>注释掉其中的bind-address =127.0.0.1这段话；
+然后执行mysql</p>
+<pre><code>&gt;mysql -u 你的mysql用户名 -p
+</code></pre>
+<p>输入密码之后</p>
+<p>执行</p>
+<pre><code>    #其中 *.* 表示匹配所有数据库 ，也可写上你需要放开的数据库名
+    #@'%' %匹配所有的远程地址，可以直接写上你允许的IP地址
+    #  username 写你的用户名 
+    # &quot;password&quot; 中写你的密码
+    
+    grant all privileges on *.* to username @&quot;%&quot; identified by &quot;password&quot;;
+    
+    //执行完这个之后，接着执行flush privileges;让结果立即生效
+    flush privileges;
+</code></pre><p>这个时候，我们就可以在远程通过刚刚设置的username 和 password 登录我们的数据库了</p>
+<p>PS：如果是腾讯云服务器，记得也要在安全组中添加3306端口的访问权限。</p>
+<p>OK,这部分的内容就完成了。</p>
+
         </div>
 
         
@@ -312,15 +290,13 @@
     <h2 style="border-top: 1px solid #eee;">See Also</h2>
     <ul class="listing">
         
-        <li><a href="/post/php-basic02/">PHP基础知识学习(02)--SAPI</a></li>
+        <li><a href="/tutorial/create-your-own-website02/">从零开始布置你的个人网站（二）</a></li>
         
-        <li><a href="/post/php-basic01/">PHP基础知识学习(01)--生命周期</a></li>
+        <li><a href="/tutorial/create-your-own-website01/">从零开始布置你的个人网站（一）</a></li>
         
-        <li><a href="/tutorial/how-to-create-you-own-blog/">使用Hugo&#43;GitHub Pages 搭建个人博客</a></li>
+        <li><a href="/archives/">归档</a></li>
         
-        <li><a href="/post/my-first-post/">博客开通啦！</a></li>
-        
-        <li><a href="/tutorial/how-to-create-proxy-server-on-ubuntu/">如何在Ubuntu中搭建网络代理服务</a></li>
+        <li><a href="/search/">搜索</a></li>
         
     </ul>
 </div>
@@ -331,11 +307,9 @@
             
             <ul class="clearfix">
                 
-                <li><a href='https://xiangxihenli.github.io/tags/HTTP'>HTTP</a></li>
+                <li><a href='https://xiangxihenli.github.io/tags/%E6%95%99%E7%A8%8B'>教程</a></li>
                 
-                <li><a href='https://xiangxihenli.github.io/tags/Apache'>Apache</a></li>
-                
-                <li><a href='https://xiangxihenli.github.io/tags/HTTP-Server'>HTTP Server</a></li>
+                <li><a href='https://xiangxihenli.github.io/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8'>服务器</a></li>
                 
             </ul>
             

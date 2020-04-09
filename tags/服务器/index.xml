@@ -1,24 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>教程 on 相惜恨离</title>
-    <link>https://xiangxihenli.github.io/categories/%E6%95%99%E7%A8%8B/</link>
-    <description>Recent content in 教程 on 相惜恨离</description>
+    <title>服务器 on 相惜恨离</title>
+    <link>https://xiangxihenli.github.io/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/</link>
+    <description>Recent content in 服务器 on 相惜恨离</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Thu, 27 Feb 2020 23:51:05 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 19 Jun 2018 16:39:18 +0800</lastBuildDate>
     
-	<atom:link href="https://xiangxihenli.github.io/categories/%E6%95%99%E7%A8%8B/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://xiangxihenli.github.io/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>使用Hugo&#43;GitHub Pages 搭建个人博客</title>
-      <link>https://xiangxihenli.github.io/tutorial/how-to-create-you-own-blog/</link>
-      <pubDate>Thu, 27 Feb 2020 23:51:05 +0800</pubDate>
-      
-      <guid>https://xiangxihenli.github.io/tutorial/how-to-create-you-own-blog/</guid>
-      <description>Hugo是什么 Hugo是一个静态站点生成工具。可以根据Markdown文件生成静态站点文件。 同类型的产品还有Hexo、JEKYLL、Next.js等。 下载安装Hugo Windows可根据官网教程，到Hugo release中下载最新的可执行文件。 下载解压后，将解压路径添加进环境变量</description>
-    </item>
     
     <item>
       <title>如何在Ubuntu中搭建网络代理服务</title>
