@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>数据库 on 相惜恨离</title>
+    <link>https://xiangxihenli.github.io/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/</link>
+    <description>Recent content in 数据库 on 相惜恨离</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Fri, 03 Apr 2020 22:19:13 +0800</lastBuildDate>
+    
+	<atom:link href="https://xiangxihenli.github.io/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>深入MySQL基础学习01--存储</title>
+      <link>https://xiangxihenli.github.io/post/mysql-basic01/</link>
+      <pubDate>Fri, 03 Apr 2020 22:19:13 +0800</pubDate>
+      
+      <guid>https://xiangxihenli.github.io/post/mysql-basic01/</guid>
+      <description>简介 接下来想学习一下MySQL相关的一些基础知识。主要涉及MySQL的存储、索引、事务和锁相关的知识。 用了很久的MySQL，对于MySQL的知识还是始于应用，终于应用。而且只是知道一个大概。 接下来这个系列，我想好好稍微深入的了解MySQL的一些基础知识，为以后深入学习数据库的原理</description>
+    </item>
+    
+  </channel>
+</rss>
