@@ -71,70 +71,231 @@
     <article class="post">
         <header>
             <h1 class="post-title">
-                <a href="https://xiangxihenli.github.io/tutorial/create-your-own-website03/" title="从零开始布置你的个人网站（三）">从零开始布置你的个人网站（三）</a>
+                <a href="https://xiangxihenli.github.io/post/http-server-apache-work-mode/" title="Apache三种工作模式">Apache三种工作模式</a>
             </h1>
         </header>
         <date class="post-meta meta-date">
-            2017年7月15日
+            2020年4月1日
         </date>
         
         <div class="post-meta">
             <span>|</span>
             
-            <span class="meta-category"><a href='https://xiangxihenli.github.io/categories/%E6%95%99%E7%A8%8B'>教程</a></span>
+            <span class="meta-category"><a href='https://xiangxihenli.github.io/categories/HTTP%E6%9C%8D%E5%8A%A1%E5%99%A8'>HTTP服务器</a></span>
             
         </div>
         
         <div class="post-content">
-            线上部署项目 安装完成Laravel后，我们就下来就尝试如何把线上的代码，下载到服务器中。 我们在部署项目的时候，通常都是把代码先放到git，coding，svn或者其他托管服务中，然后在从服务器下将代码下载下来。 Git 发布项目 利用git来发布项目，首先我们需要下载安装git 的官方工具，……
+            摘要 Apache中主要有三种多进程的工作模式，分别是prefork，Worker，Event。 具体运行哪种模式，可以到Apache的配置文件中查询。 Prefork MPM Prefork MPM实现了一个非线程的、预派生的web服务器。它在Apache启动之初，就先预派生一些子进程，然后等待连接；可以减少频繁创建……
         </div>
-        <p class="readmore"><a href="https://xiangxihenli.github.io/tutorial/create-your-own-website03/">阅读全文</a></p>
+        <p class="readmore"><a href="https://xiangxihenli.github.io/post/http-server-apache-work-mode/">阅读全文</a></p>
     </article>
     
     <article class="post">
         <header>
             <h1 class="post-title">
-                <a href="https://xiangxihenli.github.io/tutorial/create-your-own-website02/" title="从零开始布置你的个人网站（二）">从零开始布置你的个人网站（二）</a>
+                <a href="https://xiangxihenli.github.io/post/php-basic02/" title="PHP基础知识学习(02)--SAPI">PHP基础知识学习(02)--SAPI</a>
             </h1>
         </header>
         <date class="post-meta meta-date">
-            2017年7月14日
+            2020年4月1日
         </date>
         
         <div class="post-meta">
             <span>|</span>
             
-            <span class="meta-category"><a href='https://xiangxihenli.github.io/categories/%E6%95%99%E7%A8%8B'>教程</a></span>
+            <span class="meta-category"><a href='https://xiangxihenli.github.io/categories/PHP%E5%9F%BA%E7%A1%80'>PHP基础</a></span>
             
         </div>
         
         <div class="post-content">
-            部署Laravel环境 部署完基本LAMP环境之后，因为我的项目中会使用到Laravel，所以接下来继续搭建Laravel环境。 首先要使用Laravel最好先安装composer。 安装composer ubuntu中安装composer 可以下面两个命令来执行 命令一: curl -sS https://getcomposer.org/installer | php 命令二:……
+            摘要 在了解了PHP的生命周期后，再来详细了解一下SAPI是如何工作的。接下来从PHP主要的几个应用场景下去了解SAPI。 比如Apache，CLI，CGI，FastCGI，FPM。 说实话这几个概念之前可是困扰了我很久。 Apache Apache是一个开源的Web服务器。可以支持多种特性，大多通……
         </div>
-        <p class="readmore"><a href="https://xiangxihenli.github.io/tutorial/create-your-own-website02/">阅读全文</a></p>
+        <p class="readmore"><a href="https://xiangxihenli.github.io/post/php-basic02/">阅读全文</a></p>
     </article>
     
     <article class="post">
         <header>
             <h1 class="post-title">
-                <a href="https://xiangxihenli.github.io/tutorial/create-your-own-website01/" title="从零开始布置你的个人网站（一）">从零开始布置你的个人网站（一）</a>
+                <a href="https://xiangxihenli.github.io/post/php-basic01/" title="PHP基础知识学习(01)--生命周期">PHP基础知识学习(01)--生命周期</a>
             </h1>
         </header>
         <date class="post-meta meta-date">
-            2017年7月13日
+            2020年3月31日
         </date>
         
         <div class="post-meta">
             <span>|</span>
             
-            <span class="meta-category"><a href='https://xiangxihenli.github.io/categories/%E6%95%99%E7%A8%8B'>教程</a></span>
+            <span class="meta-category"><a href='https://xiangxihenli.github.io/categories/PHP%E5%9F%BA%E7%A1%80'>PHP基础</a></span>
             
         </div>
         
         <div class="post-content">
-            服务器准备 之前用腾讯云购买了一个1元服务器，但是一直没有用起来，最近项目不太忙，准备自己搭建一个线上环境。 安装ubuntu环境 ####安装ubuntu环境 安装ubuntu的16.04.1的32环境 登录ubuntu系统，可以直接使用腾讯云的登录，也可以通过各种ssh工具登录。 在Ub……
+            PHP架构 PHP架构图： SAPI Server Application Programing Interface，PHP与外部应用交换接口。 常见有给Apache的mod_php5，mode_php7，CGI，IIS的ISAPI，还有Shell的CLI。 Zend Engine PHP的核心部分，包括编译器和执行器两部分。负责编译PHP语法为字节码，执行字节码。 P……
         </div>
-        <p class="readmore"><a href="https://xiangxihenli.github.io/tutorial/create-your-own-website01/">阅读全文</a></p>
+        <p class="readmore"><a href="https://xiangxihenli.github.io/post/php-basic01/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://xiangxihenli.github.io/post/five-io-model/" title="常见的5种IO模型的比较">常见的5种IO模型的比较</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2020年3月31日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='https://xiangxihenli.github.io/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F'>操作系统</a></span>
+            
+        </div>
+        
+        <div class="post-content">
+            ……
+        </div>
+        <p class="readmore"><a href="https://xiangxihenli.github.io/post/five-io-model/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://xiangxihenli.github.io/post/interview01/" title="PHP中高级程序员面经">PHP中高级程序员面经</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2020年3月13日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='https://xiangxihenli.github.io/categories/%E9%9D%A2%E8%AF%95'>面试</a></span>
+            
+        </div>
+        
+        <div class="post-content">
+            简介 作为一个机械半路转行的程序员，无时无刻都会感觉到要学的东西太多了。 前三年在一家技术栈比较陈旧的公司，主要的工作都花在了业务上面。 结果出来面试之后，才发现原本就没有基础的我，和整个市场显得格格不入。 还好至少有个本科学历，因此投简历还能有幸拿到面试机会。当然整个面试过程就不是很友……
+        </div>
+        <p class="readmore"><a href="https://xiangxihenli.github.io/post/interview01/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://xiangxihenli.github.io/post/algorithm05-learn-easy-sort/" title="数据结构和算法--排序(05)">数据结构和算法--排序(05)</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2020年3月9日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='https://xiangxihenli.github.io/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84'>数据结构</a></span>
+            
+        </div>
+        
+        <div class="post-content">
+            常见的排序 常见的排序排序算法有冒泡、插入、选择、归并、快速、桶、计数、基数排序。 排序算法 时间复杂度 是否基于比较 冒泡、插入、选择 O(n2) 是 归并、快速 O(logn) 是 桶、计数、基数 O(logn) 否 冒泡排序 算法： 每次比较相邻的两个元素，将较大的元素移动到固定一侧。依次比较完所有元素，那固定的那一侧现在就是所有元素中……
+        </div>
+        <p class="readmore"><a href="https://xiangxihenli.github.io/post/algorithm05-learn-easy-sort/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://xiangxihenli.github.io/post/algorithm04-learn-queue/" title="数据结构和算法--队列(04)">数据结构和算法--队列(04)</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2020年3月9日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='https://xiangxihenli.github.io/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84'>数据结构</a></span>
+            
+        </div>
+        
+        <div class="post-content">
+            什么是队列 堆栈（stack），是一种运算受限的线性表。只允许在有序的线性表集合的前端进行删除操作，而在表的后端进行插入操作。按照先进先出(FIFO, First In First Out)的原理运作。 操作方式和堆栈类似，区别在于队列只允许新数据在后端添加。 可以使用数组，也可以使用链表实现。 使用数组实现的叫……
+        </div>
+        <p class="readmore"><a href="https://xiangxihenli.github.io/post/algorithm04-learn-queue/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://xiangxihenli.github.io/post/algorithm03-learn-stack/" title="数据结构和算法--堆栈(03)">数据结构和算法--堆栈(03)</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2020年3月9日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='https://xiangxihenli.github.io/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84'>数据结构</a></span>
+            
+        </div>
+        
+        <div class="post-content">
+            什么是堆栈 堆栈（stack），是一种运算受限的线性表。只允许在有序的线性表集合的一端(栈顶或者堆叠顶,top)添加数据和移除数据。因而按照后进先出(LIFO, Last In First Out)的原理运作。 栈通常用数组或者链表来实现。 堆栈的特性 栈的特点： 先进后出，后进先出 除头尾节点之外，每个元素有一个……
+        </div>
+        <p class="readmore"><a href="https://xiangxihenli.github.io/post/algorithm03-learn-stack/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://xiangxihenli.github.io/post/algorithm02-learn-linked-list/" title="数据结构和算法--链表(02)">数据结构和算法--链表(02)</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2020年3月1日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='https://xiangxihenli.github.io/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84'>数据结构</a></span>
+            
+        </div>
+        
+        <div class="post-content">
+            什么是链表 链表（Linked list），是一组物理存储单元非连续、非顺序的线性表存储结构。元素的连接顺序通过链表中的指针链接次序实现。链表结构通常有一连串节点组成，每个节点包含任意的实例数据(data fields) 和一个或者两个用于指向上一个或下一个节点位置的链接。 常见的链表类型:单向链表、……
+        </div>
+        <p class="readmore"><a href="https://xiangxihenli.github.io/post/algorithm02-learn-linked-list/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://xiangxihenli.github.io/post/algorithm01-learn-array/" title="数据结构和算法--数组(01)">数据结构和算法--数组(01)</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2020年2月29日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='https://xiangxihenli.github.io/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84'>数据结构</a></span>
+            
+        </div>
+        
+        <div class="post-content">
+            什么是数组 数组（Array），用一组连续的内存空间，存储具有相同类型的元素的线性表数据结构。 数组的特性 数组两个特性：连续内存空间、相同类型数据。 连续内存空间的好处是，可以根据索引进行内存地址的直接寻址。 这样记住首个元素的地址，就可以根据索引直接计算出其他元素对应的地址。 相同类型数……
+        </div>
+        <p class="readmore"><a href="https://xiangxihenli.github.io/post/algorithm01-learn-array/">阅读全文</a></p>
     </article>
     
     
@@ -157,7 +318,15 @@
         <a href="https://xiangxihenli.github.io/page/2/">2</a>
     </li>
     
+    <li >
+        <a href="https://xiangxihenli.github.io/page/3/">3</a>
+    </li>
+    
 
+    
+    <li class="next">
+        <a href="https://xiangxihenli.github.io/page/3/">下一页</a>
+    </li>
     
 </ol>
 
@@ -182,6 +351,34 @@
 <ul class="widget-list">
     
     <li>
+        <a href="https://xiangxihenli.github.io/post/queue-redis-and-others/" title="Laravel 队列分析">Laravel 队列分析</a>
+    </li>
+    
+    <li>
+        <a href="https://xiangxihenli.github.io/post/how-to-build-a-seckill-system/" title="如何创建一个秒杀系统">如何创建一个秒杀系统</a>
+    </li>
+    
+    <li>
+        <a href="https://xiangxihenli.github.io/post/queue-basic01/" title="队列基础知识01">队列基础知识01</a>
+    </li>
+    
+    <li>
+        <a href="https://xiangxihenli.github.io/post/high-concurrency-basic01/" title="高并发学习01">高并发学习01</a>
+    </li>
+    
+    <li>
+        <a href="https://xiangxihenli.github.io/post/mysql-basic03/" title="深入MySQL基础学习03--事务、锁">深入MySQL基础学习03--事务、锁</a>
+    </li>
+    
+    <li>
+        <a href="https://xiangxihenli.github.io/post/learn-redis01/" title="学习Redis01">学习Redis01</a>
+    </li>
+    
+    <li>
+        <a href="https://xiangxihenli.github.io/post/mysql-basic02/" title="深入MySQL基础学习02--索引">深入MySQL基础学习02--索引</a>
+    </li>
+    
+    <li>
         <a href="https://xiangxihenli.github.io/post/mysql-basic01/" title="深入MySQL基础学习01--存储">深入MySQL基础学习01--存储</a>
     </li>
     
@@ -191,34 +388,6 @@
     
     <li>
         <a href="https://xiangxihenli.github.io/post/php-basic03/" title="PHP基础知识学习(03)--变量">PHP基础知识学习(03)--变量</a>
-    </li>
-    
-    <li>
-        <a href="https://xiangxihenli.github.io/post/http-server-apache-work-mode/" title="Apache三种工作模式">Apache三种工作模式</a>
-    </li>
-    
-    <li>
-        <a href="https://xiangxihenli.github.io/post/php-basic02/" title="PHP基础知识学习(02)--SAPI">PHP基础知识学习(02)--SAPI</a>
-    </li>
-    
-    <li>
-        <a href="https://xiangxihenli.github.io/post/php-basic01/" title="PHP基础知识学习(01)--生命周期">PHP基础知识学习(01)--生命周期</a>
-    </li>
-    
-    <li>
-        <a href="https://xiangxihenli.github.io/tutorial/how-to-create-you-own-blog/" title="使用Hugo&#43;GitHub Pages 搭建个人博客">使用Hugo&#43;GitHub Pages 搭建个人博客</a>
-    </li>
-    
-    <li>
-        <a href="https://xiangxihenli.github.io/post/my-first-post/" title="博客开通啦！">博客开通啦！</a>
-    </li>
-    
-    <li>
-        <a href="https://xiangxihenli.github.io/tutorial/how-to-create-proxy-server-on-ubuntu/" title="如何在Ubuntu中搭建网络代理服务">如何在Ubuntu中搭建网络代理服务</a>
-    </li>
-    
-    <li>
-        <a href="https://xiangxihenli.github.io/tutorial/create-your-own-website04/" title="从零开始布置你的个人网站（四）">从零开始布置你的个人网站（四）</a>
     </li>
     
 </ul>
@@ -235,11 +404,17 @@
     
     <li><a href="https://xiangxihenli.github.io/categories/PHP%E5%9F%BA%E7%A1%80/">PHP基础 (4)</a></li>
     
+    <li><a href="https://xiangxihenli.github.io/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统 (1)</a></li>
+    
     <li><a href="https://xiangxihenli.github.io/categories/%E6%95%99%E7%A8%8B/">教程 (6)</a></li>
     
-    <li><a href="https://xiangxihenli.github.io/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库 (1)</a></li>
+    <li><a href="https://xiangxihenli.github.io/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库 (3)</a></li>
+    
+    <li><a href="https://xiangxihenli.github.io/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构 (5)</a></li>
     
     <li><a href="https://xiangxihenli.github.io/categories/%E7%94%9F%E6%B4%BB/">生活 (1)</a></li>
+    
+    <li><a href="https://xiangxihenli.github.io/categories/%E9%9D%A2%E8%AF%95/">面试 (1)</a></li>
     
 </ul>
     </section>
@@ -260,13 +435,19 @@
     
     <a href="https://xiangxihenli.github.io/tags/%E5%9F%BA%E7%A1%80/">基础</a>
     
+    <a href="https://xiangxihenli.github.io/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a>
+    
     <a href="https://xiangxihenli.github.io/tags/%E6%95%99%E7%A8%8B/">教程</a>
     
     <a href="https://xiangxihenli.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>
     
+    <a href="https://xiangxihenli.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a>
+    
     <a href="https://xiangxihenli.github.io/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/">服务器</a>
     
     <a href="https://xiangxihenli.github.io/tags/%E7%94%9F%E6%B4%BB/">生活</a>
+    
+    <a href="https://xiangxihenli.github.io/tags/%E9%9D%A2%E8%AF%95/">面试</a>
     
 </div>
     </section>

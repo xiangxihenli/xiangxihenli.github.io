@@ -212,10 +212,10 @@
 <li>InnoDB如何支持事务的，隔离级别和锁的？</li>
 </ol>
 <h2 id="数据库系统">数据库系统</h2>
-<p>业务中因为需要将一些数据持久话的保存和读取。数据可以存在文件中，但是随意的在文件中存数据，对于读取和管理的难度很大。
-于是就有了专门的数据系统。</p>
-<p>数据库最终是需要对数据实现持久化的存储的，所以单纯的放在内存中是不行的。所以，数据最终都会存到外存上。
-因为存在外寸上，读写的时会涉及到磁盘IO(一次IO大概5ms左右)。尤其是大量数据的时候，读写非常耗时。
+<p>业务中因为需要将一些数据持久化的保存和读取。数据可以存在文件中，但是随意的在文件中存数据，对于读取和管理的难度很大。
+于是就有了专门的数据库管理系统。</p>
+<p>数据库系统需要对数据实现持久化的存储，所以单纯的放在内存中是不行的(内存数据库除外)。所以，数据最终都会存到外存上。
+因为存在外存上，读写的时会涉及到磁盘IO(一次IO大概5ms左右)。尤其是大量数据的时候，读写非常耗时。
 所以数据库的存储设计就显得非常重要。</p>
 <h2 id="文件系统io">文件系统IO</h2>
 <p>在了解MySQL的存储实现之前，先了解一下文件系统的相关知识。文件如何进行IO？</p>
@@ -315,8 +315,8 @@ Compact处理方式是只存该字段的736个字节 + 指针。Dynamic直接保
 <li>页目录：存放Slot，也就是行的系数目录，Slot最多存8个行数据。首个Slot默认只有一个Infimum记录，中间的存4-8个行数据。末尾的Slot存1~8个行数据(包括Supermum)</li>
 <li>文件尾 ：用于检验文件是否正常，有没有被破损。</li>
 </ul>
-<p>在页结构内，通常存有多个行数据，行数据和行数据之间使用单项链表进行连接，同时还维护着一个页目录，里面存有行数据的系数目录，页目录的地址指向该目录中最后一条数据。
-这样如果需要查询行数据里面的内容，可以先对页目录进行二分查找来优化查询速度。</p>
+<p>在页结构内，通常存有多个行数据，行数据和行数据之间使用双向链表进行连接，同时还维护着一个页目录，里面存有行数据的系数目录，页目录的地址指向该目录中最后一条数据。
+这样如果需要查询行数据里面的内容，可以先对页目录进行二分查找来优化查询速度。 页和页之间通过双向链表来连接，这样方便之后的排序asc和desc。</p>
 <h2 id="总结">总结</h2>
 <p>这一部分简单学习了MySQL中数据的存储格式。里面提到了行结构和页结构。知道了这些结构，我们就可以更好的学习索引和其他相关的MySQL知识了。</p>
 <p>PS： 写这篇文章的时候，对MySQL算不是很了解，查了很多资料，最终有两份资料我觉得特别赞，推荐给大家。</p>
@@ -343,7 +343,7 @@ Compact处理方式是只存该字段的736个字节 + 指针。Dynamic直接保
         
         <li><a href="/post/php-basic01/">PHP基础知识学习(01)--生命周期</a></li>
         
-        <li><a href="/post/http-server-apache-work-mode/">Apache三种工作模式</a></li>
+        <li><a href="/post/five-io-model/">常见的5种IO模型的比较</a></li>
         
     </ul>
 </div>
@@ -386,6 +386,34 @@ Compact处理方式是只存该字段的736个字节 + 指针。Dynamic直接保
 <ul class="widget-list">
     
     <li>
+        <a href="https://xiangxihenli.github.io/post/queue-redis-and-others/" title="Laravel 队列分析">Laravel 队列分析</a>
+    </li>
+    
+    <li>
+        <a href="https://xiangxihenli.github.io/post/how-to-build-a-seckill-system/" title="如何创建一个秒杀系统">如何创建一个秒杀系统</a>
+    </li>
+    
+    <li>
+        <a href="https://xiangxihenli.github.io/post/queue-basic01/" title="队列基础知识01">队列基础知识01</a>
+    </li>
+    
+    <li>
+        <a href="https://xiangxihenli.github.io/post/high-concurrency-basic01/" title="高并发学习01">高并发学习01</a>
+    </li>
+    
+    <li>
+        <a href="https://xiangxihenli.github.io/post/mysql-basic03/" title="深入MySQL基础学习03--事务、锁">深入MySQL基础学习03--事务、锁</a>
+    </li>
+    
+    <li>
+        <a href="https://xiangxihenli.github.io/post/learn-redis01/" title="学习Redis01">学习Redis01</a>
+    </li>
+    
+    <li>
+        <a href="https://xiangxihenli.github.io/post/mysql-basic02/" title="深入MySQL基础学习02--索引">深入MySQL基础学习02--索引</a>
+    </li>
+    
+    <li>
         <a href="https://xiangxihenli.github.io/post/mysql-basic01/" title="深入MySQL基础学习01--存储">深入MySQL基础学习01--存储</a>
     </li>
     
@@ -395,34 +423,6 @@ Compact处理方式是只存该字段的736个字节 + 指针。Dynamic直接保
     
     <li>
         <a href="https://xiangxihenli.github.io/post/php-basic03/" title="PHP基础知识学习(03)--变量">PHP基础知识学习(03)--变量</a>
-    </li>
-    
-    <li>
-        <a href="https://xiangxihenli.github.io/post/http-server-apache-work-mode/" title="Apache三种工作模式">Apache三种工作模式</a>
-    </li>
-    
-    <li>
-        <a href="https://xiangxihenli.github.io/post/php-basic02/" title="PHP基础知识学习(02)--SAPI">PHP基础知识学习(02)--SAPI</a>
-    </li>
-    
-    <li>
-        <a href="https://xiangxihenli.github.io/post/php-basic01/" title="PHP基础知识学习(01)--生命周期">PHP基础知识学习(01)--生命周期</a>
-    </li>
-    
-    <li>
-        <a href="https://xiangxihenli.github.io/tutorial/how-to-create-you-own-blog/" title="使用Hugo&#43;GitHub Pages 搭建个人博客">使用Hugo&#43;GitHub Pages 搭建个人博客</a>
-    </li>
-    
-    <li>
-        <a href="https://xiangxihenli.github.io/post/my-first-post/" title="博客开通啦！">博客开通啦！</a>
-    </li>
-    
-    <li>
-        <a href="https://xiangxihenli.github.io/tutorial/how-to-create-proxy-server-on-ubuntu/" title="如何在Ubuntu中搭建网络代理服务">如何在Ubuntu中搭建网络代理服务</a>
-    </li>
-    
-    <li>
-        <a href="https://xiangxihenli.github.io/tutorial/create-your-own-website04/" title="从零开始布置你的个人网站（四）">从零开始布置你的个人网站（四）</a>
     </li>
     
 </ul>
@@ -439,11 +439,17 @@ Compact处理方式是只存该字段的736个字节 + 指针。Dynamic直接保
     
     <li><a href="https://xiangxihenli.github.io/categories/PHP%E5%9F%BA%E7%A1%80/">PHP基础 (4)</a></li>
     
+    <li><a href="https://xiangxihenli.github.io/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统 (1)</a></li>
+    
     <li><a href="https://xiangxihenli.github.io/categories/%E6%95%99%E7%A8%8B/">教程 (6)</a></li>
     
-    <li><a href="https://xiangxihenli.github.io/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库 (1)</a></li>
+    <li><a href="https://xiangxihenli.github.io/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库 (3)</a></li>
+    
+    <li><a href="https://xiangxihenli.github.io/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构 (5)</a></li>
     
     <li><a href="https://xiangxihenli.github.io/categories/%E7%94%9F%E6%B4%BB/">生活 (1)</a></li>
+    
+    <li><a href="https://xiangxihenli.github.io/categories/%E9%9D%A2%E8%AF%95/">面试 (1)</a></li>
     
 </ul>
     </section>
@@ -464,13 +470,19 @@ Compact处理方式是只存该字段的736个字节 + 指针。Dynamic直接保
     
     <a href="https://xiangxihenli.github.io/tags/%E5%9F%BA%E7%A1%80/">基础</a>
     
+    <a href="https://xiangxihenli.github.io/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a>
+    
     <a href="https://xiangxihenli.github.io/tags/%E6%95%99%E7%A8%8B/">教程</a>
     
     <a href="https://xiangxihenli.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>
     
+    <a href="https://xiangxihenli.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a>
+    
     <a href="https://xiangxihenli.github.io/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/">服务器</a>
     
     <a href="https://xiangxihenli.github.io/tags/%E7%94%9F%E6%B4%BB/">生活</a>
+    
+    <a href="https://xiangxihenli.github.io/tags/%E9%9D%A2%E8%AF%95/">面试</a>
     
 </div>
     </section>

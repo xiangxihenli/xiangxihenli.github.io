@@ -6,10 +6,19 @@
     <description>Recent content in Tutorials on 相惜恨离</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Thu, 27 Feb 2020 23:51:05 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 29 Feb 2020 09:22:55 +0800</lastBuildDate>
     
 	<atom:link href="https://xiangxihenli.github.io/tutorial/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>学习JAVA第一步</title>
+      <link>https://xiangxihenli.github.io/tutorial/learn-java/</link>
+      <pubDate>Sat, 29 Feb 2020 09:22:55 +0800</pubDate>
+      
+      <guid>https://xiangxihenli.github.io/tutorial/learn-java/</guid>
+      <description>为什么学习Java 我之所以想要学习JAVA主要是出于两个原因， JAVA的生态是众多语言中非常出色的，技术人员的水平也相对不错。所以能做很多事情，也会有一个好的学习环境。 长期学习PHP语言容易养成一个浅尝辄止的习惯，很多知识浮于表面。 通过对JAVA语言的学习慢慢的牢固自己的基础知识</description>
+    </item>
     
     <item>
       <title>使用Hugo&#43;GitHub Pages 搭建个人博客</title>

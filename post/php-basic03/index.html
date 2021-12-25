@@ -270,7 +270,8 @@
 <li>zvalue_value中zend_object_value占用的空间较大，使用指针代替。</li>
 <li>zval的结构体变量比较固定，不利于扩展。</li>
 <li>zval obj需要自身维护一个refcount</li>
-<li>因为引用计数是作用在zval的, 导致如果要拷贝一个字符串类型的zval, 只能复制这个字符串. 当把一个zval的字符串作为key添加到一个数组里的时候, 只能复制这个字符串.</li>
+<li>因为引用计数是作用在zval的, 导致如果要拷贝一个字符串类型的zval, 只能复制这个字符串. 当把一个zval的字符串作为key添加到一个数组里的时候,
+只能复制这个字符串.</li>
 <li>写时分离存在性能问题</li>
 </ol>
 <p>这些问题在php7中得到了解决。</p>
@@ -490,6 +491,8 @@
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#000;font-weight:bold">typedef</span> <span style="color:#000;font-weight:bold">struct</span> _zend_array HashTable;
@@ -515,6 +518,8 @@
 </span><span style="color:#998;font-style:italic"></span>    zend_long         nNextFreeElement;
     dtor_func_t       pDestructor;
 };
+
+
 </code></pre></td></tr></table>
 </div>
 </div><p>PHP7对数组进行了极大的优化，缩小的数组所占字节数。</p>
@@ -649,6 +654,10 @@ PHP的对象只有在运行时才会被创建，全局的EG宏中保存了在运
 <h2 id="垃圾回收">垃圾回收</h2>
 <p>PHP变量的回收是根据refcount实现的，当unset、return时会将变量的引用计数减掉，如果refcount减到0则直接释放value，这是变量的简单gc过程，
 但是实际过程中出现gc无法回收导致内存泄漏的bug。</p>
+<p>首先想要知道PHP如何进行垃圾回收的，就需要先知道究竟什么是垃圾？</p>
+<p>在PHP中一个int或者string变量，如果没有被其他变量引用，被 unset 之后是会删除符号表和变量的。这是不会产生垃圾的。
+但是如果变量是一个数组，但是其自身引用了自身，那么就会引起循环引用。 这时候去执行 unset 会删除符号表，但是因为变量自身存在引用，
+所以就没有办法进行销毁，然而实施情况是引用它的变量已经被销魂了，这个数组永远都得不到解脱了。</p>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -691,11 +700,11 @@ unset($a);
         
         <li><a href="/post/php-basic01/">PHP基础知识学习(01)--生命周期</a></li>
         
-        <li><a href="/post/http-server-apache-work-mode/">Apache三种工作模式</a></li>
+        <li><a href="/post/five-io-model/">常见的5种IO模型的比较</a></li>
         
-        <li><a href="/tutorial/how-to-create-you-own-blog/">使用Hugo&#43;GitHub Pages 搭建个人博客</a></li>
+        <li><a href="/post/algorithm05-learn-easy-sort/">数据结构和算法--排序(05)</a></li>
         
-        <li><a href="/post/my-first-post/">博客开通啦！</a></li>
+        <li><a href="/post/algorithm04-learn-queue/">数据结构和算法--队列(04)</a></li>
         
     </ul>
 </div>
@@ -738,6 +747,34 @@ unset($a);
 <ul class="widget-list">
     
     <li>
+        <a href="https://xiangxihenli.github.io/post/queue-redis-and-others/" title="Laravel 队列分析">Laravel 队列分析</a>
+    </li>
+    
+    <li>
+        <a href="https://xiangxihenli.github.io/post/how-to-build-a-seckill-system/" title="如何创建一个秒杀系统">如何创建一个秒杀系统</a>
+    </li>
+    
+    <li>
+        <a href="https://xiangxihenli.github.io/post/queue-basic01/" title="队列基础知识01">队列基础知识01</a>
+    </li>
+    
+    <li>
+        <a href="https://xiangxihenli.github.io/post/high-concurrency-basic01/" title="高并发学习01">高并发学习01</a>
+    </li>
+    
+    <li>
+        <a href="https://xiangxihenli.github.io/post/mysql-basic03/" title="深入MySQL基础学习03--事务、锁">深入MySQL基础学习03--事务、锁</a>
+    </li>
+    
+    <li>
+        <a href="https://xiangxihenli.github.io/post/learn-redis01/" title="学习Redis01">学习Redis01</a>
+    </li>
+    
+    <li>
+        <a href="https://xiangxihenli.github.io/post/mysql-basic02/" title="深入MySQL基础学习02--索引">深入MySQL基础学习02--索引</a>
+    </li>
+    
+    <li>
         <a href="https://xiangxihenli.github.io/post/mysql-basic01/" title="深入MySQL基础学习01--存储">深入MySQL基础学习01--存储</a>
     </li>
     
@@ -747,34 +784,6 @@ unset($a);
     
     <li>
         <a href="https://xiangxihenli.github.io/post/php-basic03/" title="PHP基础知识学习(03)--变量">PHP基础知识学习(03)--变量</a>
-    </li>
-    
-    <li>
-        <a href="https://xiangxihenli.github.io/post/http-server-apache-work-mode/" title="Apache三种工作模式">Apache三种工作模式</a>
-    </li>
-    
-    <li>
-        <a href="https://xiangxihenli.github.io/post/php-basic02/" title="PHP基础知识学习(02)--SAPI">PHP基础知识学习(02)--SAPI</a>
-    </li>
-    
-    <li>
-        <a href="https://xiangxihenli.github.io/post/php-basic01/" title="PHP基础知识学习(01)--生命周期">PHP基础知识学习(01)--生命周期</a>
-    </li>
-    
-    <li>
-        <a href="https://xiangxihenli.github.io/tutorial/how-to-create-you-own-blog/" title="使用Hugo&#43;GitHub Pages 搭建个人博客">使用Hugo&#43;GitHub Pages 搭建个人博客</a>
-    </li>
-    
-    <li>
-        <a href="https://xiangxihenli.github.io/post/my-first-post/" title="博客开通啦！">博客开通啦！</a>
-    </li>
-    
-    <li>
-        <a href="https://xiangxihenli.github.io/tutorial/how-to-create-proxy-server-on-ubuntu/" title="如何在Ubuntu中搭建网络代理服务">如何在Ubuntu中搭建网络代理服务</a>
-    </li>
-    
-    <li>
-        <a href="https://xiangxihenli.github.io/tutorial/create-your-own-website04/" title="从零开始布置你的个人网站（四）">从零开始布置你的个人网站（四）</a>
     </li>
     
 </ul>
@@ -791,11 +800,17 @@ unset($a);
     
     <li><a href="https://xiangxihenli.github.io/categories/PHP%E5%9F%BA%E7%A1%80/">PHP基础 (4)</a></li>
     
+    <li><a href="https://xiangxihenli.github.io/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统 (1)</a></li>
+    
     <li><a href="https://xiangxihenli.github.io/categories/%E6%95%99%E7%A8%8B/">教程 (6)</a></li>
     
-    <li><a href="https://xiangxihenli.github.io/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库 (1)</a></li>
+    <li><a href="https://xiangxihenli.github.io/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库 (3)</a></li>
+    
+    <li><a href="https://xiangxihenli.github.io/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构 (5)</a></li>
     
     <li><a href="https://xiangxihenli.github.io/categories/%E7%94%9F%E6%B4%BB/">生活 (1)</a></li>
+    
+    <li><a href="https://xiangxihenli.github.io/categories/%E9%9D%A2%E8%AF%95/">面试 (1)</a></li>
     
 </ul>
     </section>
@@ -816,13 +831,19 @@ unset($a);
     
     <a href="https://xiangxihenli.github.io/tags/%E5%9F%BA%E7%A1%80/">基础</a>
     
+    <a href="https://xiangxihenli.github.io/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a>
+    
     <a href="https://xiangxihenli.github.io/tags/%E6%95%99%E7%A8%8B/">教程</a>
     
     <a href="https://xiangxihenli.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>
     
+    <a href="https://xiangxihenli.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a>
+    
     <a href="https://xiangxihenli.github.io/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/">服务器</a>
     
     <a href="https://xiangxihenli.github.io/tags/%E7%94%9F%E6%B4%BB/">生活</a>
+    
+    <a href="https://xiangxihenli.github.io/tags/%E9%9D%A2%E8%AF%95/">面试</a>
     
 </div>
     </section>

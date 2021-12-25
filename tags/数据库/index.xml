@@ -6,10 +6,28 @@
     <description>Recent content in 数据库 on 相惜恨离</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Fri, 03 Apr 2020 22:19:13 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 13 Apr 2020 11:56:43 +0800</lastBuildDate>
     
 	<atom:link href="https://xiangxihenli.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>深入MySQL基础学习03--事务、锁</title>
+      <link>https://xiangxihenli.github.io/post/mysql-basic03/</link>
+      <pubDate>Mon, 13 Apr 2020 11:56:43 +0800</pubDate>
+      
+      <guid>https://xiangxihenli.github.io/post/mysql-basic03/</guid>
+      <description>数据库事务 数据库事务是数据库管理系统执行过程中的一个逻辑单位，由一个有限的数据库操作序列构成。 概念类似于操作系统的原语，指一堆SQL，要么全部执行，要么就不执行。 数据库事务通常包含了一个序列的对数据库的读/写操作。包含有以下两个目的： 为数据库操作序列提供了一个从失败中恢复到正常状</description>
+    </item>
+    
+    <item>
+      <title>深入MySQL基础学习02--索引</title>
+      <link>https://xiangxihenli.github.io/post/mysql-basic02/</link>
+      <pubDate>Thu, 09 Apr 2020 15:46:41 +0800</pubDate>
+      
+      <guid>https://xiangxihenli.github.io/post/mysql-basic02/</guid>
+      <description>InnoDB的索引分类 InnoDB支持一下几种索引： B+ Tree 索引 全文索引 哈希索引 本文重点讲述一下B+ Tree索引 和 哈希索引。 至于全文索引，因为MySQL本身在全文索引上就没有优势，所以暂且放到之后ElasticSearch的学习中再去研究。 索引的目的 实际上说起索引，很多文章和书，都会</description>
+    </item>
     
     <item>
       <title>深入MySQL基础学习01--存储</title>
